@@ -2,7 +2,8 @@
 <div class="container">
     <form v-on:submit.prevent="submitForm">
         <input v-model="form.email" type="email" name="email"/>
-        <input v-model="form.name" type="text" name="name"/>
+        <input v-model="form.firstName" type="text" name="firstName"/>
+        <input v-model="form.lastName" type="text" name="lastName"/>
         <input v-model="form.password" type="password" name="password"/>
         <button id="buttonSignIn">Submit</button>
     </form>
@@ -18,10 +19,12 @@ export default {
     data() {
         return {
             form: {
+                firstName: '',
+                lastName: '',
                 email: '',
-                name: '',
-                password: ''
-            }
+                password: '',
+                terms: true
+            },
         }
     },
     methods: {
