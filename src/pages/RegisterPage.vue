@@ -4,18 +4,18 @@
         <form v-on:submit.prevent="submitForm">
             <div class="registerName">
                 <div class="registerFirst">
-                   <label style="margin-bottom: -12px;">First Name</label>
-                    <input v-model="form.firstName" type="text" name="firstName" placeholder="Enter your first name"/> 
+                   <label style="margin-bottom: -12px;">First Name
+                    <input v-model="form.firstName" type="text" name="firstName" placeholder="Enter your first name"/></label> 
                 </div>
                 <div class="registerLast">
-                   <label style="margin-bottom: -12px;">Last Name</label>
-                    <input v-model="form.lastName" type="text" name="lastName" placeholder="Enter your last name"/> 
+                   <label style="margin-bottom: -12px;">Last Name
+                    <input v-model="form.lastName" type="text" name="lastName" placeholder="Enter your last name"/></label>
                 </div>
             </div>
-            <label style="margin-bottom: -12px;">Email</label>
-            <input v-model="form.email" type="email" name="email" placeholder="Enter your email here"/>
-            <label style="margin-bottom: -12px;">Password</label>
-            <input v-model="form.password" type="password" name="password" placeholder="Enter your password here"/>
+            <label style="margin-bottom: -12px;">Email
+            <input v-model="form.email" type="email" name="email" placeholder="Enter your email here"/></label>
+            <label style="margin-bottom: -12px;">Password
+            <input v-model="form.password" type="password" name="password" placeholder="Enter your password here"/></label>
             <button id="buttonRegister"><p>Register now</p></button>
             <a href="/login">Already have a account</a>
         </form>

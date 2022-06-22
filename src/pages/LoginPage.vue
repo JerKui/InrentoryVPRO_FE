@@ -3,12 +3,12 @@
     <div class="leftSignIn">
         <form v-on:submit.prevent="submitForm">
             <p style="color: red;" >{{message}}</p> 
-            <label style="padding-bottom: -24px;">Email</label>
-            <input v-model="form.email" type="email" name="email" placeholder="Enter your email here"/>
-            <label style="padding-bottom: -12px;">Password</label>
-            <input v-model="form.password" type="password" name="password" placeholder="Enter your password here"/>
+            <label style="padding-bottom: -24px;">Email
+            <input v-model="form.email" type="email" name="email" placeholder="Enter your email here"/></label>
+            <label style="padding-bottom: -12px;">Password
+            <input v-model="form.password" type="password" name="password" placeholder="Enter your password here"/></label>
             <button id="buttonSignIn"><p>Log in</p></button>
-            <a href="/registernow">Register here</a>
+            <a href="/register">Register here</a>
         </form>
     </div>
     <div class="rightSignIn">
@@ -80,6 +80,12 @@ button {
 
 button p {
     font-family: 'Inter';
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 /* Animate Background*/

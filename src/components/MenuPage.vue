@@ -1,10 +1,10 @@
 <template>
 <div class="containerMenu">
     <div class="menuItems">
-        <router-link to="'/" @click="changeActive($event)"><font-awesome-icon icon="fa fa-home"/></router-link>
-        <router-link to="'/products" @click="changeActive($event)"><font-awesome-icon icon="fa fa-search"/></router-link>
-        <router-link to="'/customer" @click="changeActive($event)"><font-awesome-icon icon="fa fa-person"/></router-link>
-        <router-link to="'/company" @click="changeActive($event)"><font-awesome-icon icon="fa fa-address-book"/></router-link>
+        <router-link to="'/" ><font-awesome-icon icon="fa fa-home"/></router-link>
+        <router-link to="'/products"><font-awesome-icon icon="fa fa-search"/></router-link>
+        <router-link to="'/customer"><font-awesome-icon icon="fa fa-person"/></router-link>
+        <router-link to="'/company"><font-awesome-icon icon="fa fa-address-book"/></router-link>
         <router-link to="{path = '/login" v-on:click="logOut"><font-awesome-icon icon="fa fa-sign-out"/></router-link>
     </div>
 </div>
@@ -47,9 +47,6 @@
 </style>
 
 <script setup>
-    function changeActive(event) {
-        console.log(event.currentTarget)
-    }
 </script>
 <script>
 import { useAuthStore } from '../stores/authStore'
@@ -73,9 +70,6 @@ export default {
         logOut() {
             this.authStore.logout()
             .catch((error) => this.message = error.response.data)
-        },
-        changeActive(event) {
-            console.log(event.currentTarget)
         }
     }
 }
