@@ -1,30 +1,30 @@
-import LogIn from '@/pages/SignIn';
-import RegisterNow from '@/pages/RegisterNow';
-import DashBoard from '@/pages/DashBoard';
-import MenuView from '@/components/Menu';
+import LoginPage from '@/pages/LoginPage';
+import RegisterPage from '@/pages/RegisterPage';
+import DashboardPage from '@/pages/DashboardPage';
+import MenuPage from '@/components/MenuPage';
 import { useAuthStore } from '@/stores/authStore'
 import { createWebHistory, createRouter } from 'vue-router';
 
 const routes = [
     {
         path: '/login',
-        name: 'LogIn',
-        component: LogIn
+        name: 'LoginPage',
+        component: LoginPage
     },
     {
-        path: '/registernow',
-        name: 'RegisterNow',
-        component: RegisterNow
+        path: '/register',
+        name: 'RegisterPage',
+        component: RegisterPage
     },
     {
         path: '/',
-        name: 'DashBoard',
-        component: DashBoard
+        name: 'DashboardPage',
+        component: DashboardPage
     },
     {
-      path: '/menuview',
-      name: 'MenuView',
-      component: MenuView
+      path: '/menupage',
+      name: 'MenuPage',
+      component: MenuPage
     }
 ];
 
@@ -34,7 +34,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-    const publicPages = ['/login', '/registernow', '/success', '/404'];
+    const publicPages = ['/login', '/register', '/success', '/404'];
     const authRequired = !publicPages.includes(to.path);
     const auth = useAuthStore();
   

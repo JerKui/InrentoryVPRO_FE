@@ -101,7 +101,7 @@ button p {
 import { useAuthStore } from '../stores/authStore'
 
 export default {
-    name : 'SigninView',
+    name : 'LoginPage',
     data() {
         return {
             form: {

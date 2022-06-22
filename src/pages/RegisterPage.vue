@@ -49,7 +49,7 @@
 import axios from '../axios-common'
 
 export default {
-    name : 'RegisternowView',
+    name : 'RegisterPage',
     data() {
         return {
             form: {

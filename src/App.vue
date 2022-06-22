@@ -15,7 +15,7 @@
       url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
       url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
       url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
-  }
+}
 
 * { margin: 0 !important; }
 body { margin: 0 !important; }
