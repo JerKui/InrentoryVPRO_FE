@@ -1,7 +1,7 @@
 <template>
 <default-layout>
 <div class="container">
-    <h1>Welcome to the customer!</h1>
+    <h1>Welcome to the company!</h1>
 </div>
 </default-layout>
 </template>

@@ -2,6 +2,9 @@ import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import DashboardPage from '@/pages/DashboardPage';
 import MenuPage from '@/components/MenuPage';
+import CustomerPage from '@/pages/CustomerPage';
+import ProductPage from '@/pages/ProductPage';
+import CompanyPage from '@/pages/CompanyPage';
 import { useAuthStore } from '@/stores/authStore'
 import { createWebHistory, createRouter } from 'vue-router';
 
@@ -25,6 +28,21 @@ const routes = [
       path: '/menupage',
       name: 'MenuPage',
       component: MenuPage
+    },
+    {
+      path: '/customer',
+      name: 'CustomerPage',
+      component: CustomerPage
+    },
+    {
+      path: '/company',
+      name: 'CompanyPage',
+      component: CompanyPage
+    },
+    {
+      path: '/products',
+      name: 'ProductPage',
+      component: ProductPage
     }
 ];
 

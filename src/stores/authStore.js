@@ -13,7 +13,7 @@ export const useAuthStore = defineStore({
         const user = await axios.post('/login', { email, password });
   
         if(!user.ok) {
-          router.push('/signin')
+          router.push('/login')
         }
   
         this.user = user;
@@ -25,7 +25,7 @@ export const useAuthStore = defineStore({
       logout() {
         this.user = null;
         localStorage.removeItem('user');
-        router.push('/signin');
+        router.push('/login');
       }
     },
     getters: {
