@@ -46,8 +46,6 @@
 
 </style>
 
-<script setup>
-</script>
 <script>
 import { useAuthStore } from '../stores/authStore'
 

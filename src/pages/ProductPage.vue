@@ -1,9 +1,9 @@
 <template>
 <default-layout>
-<div>
+<div class="container">
     <a :href="url">Best website ever</a>
 
-    <button @click="hidePanel">
+    <button @click="handleClick" ref="name">
         <span v-if="showBooks">Hide Panel</span>
         <span v-else>Show Panel</span>
     </button>
@@ -24,13 +24,11 @@
     <div class="box" @mouseleave="handleEvent($event, 5)">mouseleave</div>
     <div class="box" @dblclick="handleEvent($event, 5)">double click</div>
     <div class="box">test</div> -->
-
-
 </div>
 </default-layout>
 </template>
 
-<style>
+<style scoped>
 
 .box {
     padding: 100px 0;
@@ -57,7 +55,6 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    justify-content: center;
 }
 
 li {
@@ -73,6 +70,10 @@ li {
 
 li.fav{
     background-color: #9999;
+}
+
+.active {
+    background-color: green;
 }
 </style>
 
@@ -106,6 +107,10 @@ export default {
         },
         toggleFav(book) {
             book.isFav = !book.isFav;
+        },
+        handleClick() {
+            this.$refs.name.classList.add('active')
+            this.$refs.name.focus()
         }
     },
     computed: {

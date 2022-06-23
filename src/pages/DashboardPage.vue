@@ -79,20 +79,4 @@ export default {
 </script>
 
 <style>
-.container {
-    padding: 0;
-    margin: 0;
-    width: 100vw;
-    background-color: #fff;
-}
-
-.tableDesign {
-    border-collapse: collapse;
-}
-
-.tableHead, .tableItem {
-    width: 120px;
-    padding: 8px;
-    border: 1px solid;
-}
 </style>

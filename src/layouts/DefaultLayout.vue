@@ -5,7 +5,7 @@
 </div>
 </template>
 
-<style scoped>
+<style>
 div {
     display: flex;
 }

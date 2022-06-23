@@ -18,11 +18,10 @@
 </div>
 </template>
 
-<style>
+<style scoped>
 
 .containerLoginRegister {
     width: 100vw;
-    margin: 24px;
     display: flex;
     justify-items: center;
     align-items: center;
@@ -36,12 +35,15 @@
 
 .leftSignIn {
     padding: 48px;
+    display: flex;
+    justify-content: center;
     width: 50vw;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 24px;
 }
 

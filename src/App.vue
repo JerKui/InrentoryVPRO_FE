@@ -17,16 +17,30 @@
       url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
 }
 
-* { margin: 0 !important; }
-body { margin: 0 !important; }
 
-body {
-  height: 100%;
+* { 
+  margin: 0 !important;
+}
+
+body { 
+  margin: 0 !important; 
+  padding: 0 !important;
+  height: 100vh;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
 }
 
+/* Chrome Autofill style */
 input:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
+
+/* Background Settings Global */
+.container {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    background-color: white;
+}
+
 </style>
