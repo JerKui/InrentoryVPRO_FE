@@ -3,9 +3,10 @@
     <menu-page/>
   <slot/>  
 </div>
+
 </template>
 
-<style>
+<style scoped>
 div {
     display: flex;
 }

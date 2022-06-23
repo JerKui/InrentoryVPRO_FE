@@ -25,7 +25,6 @@
 body { 
   margin: 0 !important; 
   padding: 0 !important;
-  height: 100vh;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
 }
@@ -41,6 +40,9 @@ input:-webkit-autofill {
     margin: 0;
     width: 100vw;
     background-color: white;
+}
+
+div {
 }
 
 </style>

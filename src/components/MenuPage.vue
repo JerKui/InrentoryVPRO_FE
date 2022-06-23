@@ -10,7 +10,7 @@
 </div>
 </template>
 
-<style>
+<style scoped>
 .containerMenu {
     display: flex;
     height: 100vh;
