@@ -1,6 +1,7 @@
 <template>
 <default-layout>
 <div class="container">
+    <p> {{ info }}</p>
     <a :href="url">Best website ever</a>
 
     <button @click="handleClick" ref="name">
@@ -86,6 +87,7 @@ export default {
     name: 'ProductPage',
     data() {
         return {
+            info: null,
             url: 'http://google.nl',
             showBooks: true,
             books: [
@@ -111,6 +113,7 @@ export default {
         handleClick() {
             this.$refs.name.classList.add('active')
             this.$refs.name.focus()
+            this.info = 'test'
         }
     },
     computed: {

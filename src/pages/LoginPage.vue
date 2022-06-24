@@ -47,26 +47,6 @@ form {
     gap: 24px;
 }
 
-input[type="email"], input[type="password"], input[type="text"] {
-    height: 40px;
-    border: 1px solid #E8E8E8;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 24px;
-    padding-left: 12px;
-    color: #585757;
-    overflow: hidden;
-}
-
-button {
-    color: white;
-    height: 40px;
-    background: #000000;
-    border: none;
-    overflow: hidden;
-}
-
 .background {
   background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
   background-size: 400% 400%;
@@ -78,10 +58,6 @@ button {
   overflow: hidden;
   padding:0;
   margin:0px;
-}
-
-button p {
-    font-family: 'Inter';
 }
 
 label {
