@@ -20,13 +20,13 @@
 
 * { 
   margin: 0 !important;
+  font-family: 'Inter', sans-serif;
 }
 
 body { 
   margin: 0 !important; 
   padding: 0 !important;
   overflow: hidden;
-  font-family: 'Inter', sans-serif;
 }
 
 /* Chrome Autofill style */
@@ -42,11 +42,9 @@ input:-webkit-autofill {
     height: 100vh;
 }
 
-input[type="email"], input[type="password"], input[type="text"] {
+input {
     height: 40px;
     border: 1px solid #E8E8E8;
-
-    font-family: 'Inter', sans-serif;
     font-size: 16px;
     line-height: 24px;
     padding-left: 12px;
@@ -58,10 +56,6 @@ button {
     color: white;
     height: 40px;
     background: #000000;
-}
-
-button p {
-    font-family: 'Inter', sans-serif;
 }
 
 </style>

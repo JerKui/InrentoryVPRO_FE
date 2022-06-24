@@ -1,44 +1,46 @@
 <template>
+<div v-if="showAddCategory"><AddCategory @close="toggleAddCategory"/></div>
+<div v-if="showAddProduct"><AddProduct @close="toggleAddProduct"/></div>
 <default-layout>
-<div class="container">
-    <!-- <div class="containerProductline">
-        <ul v-for="book in info" :key="book.description">
-            <li>
-                <h3>{{ book.description }}</h3>
-                <p>{{ book.image }}</p>
-             </li>
-        </ul>
-    </div> -->
-    <h1>Welcome to the company!</h1>
-    <div class="containerForm">
-        <form class="form" form v-on:submit.prevent="postProductline">
-            <h3>Add category</h3>
+    <div class="containerLeft">
+        <div class="leftHeader">
+            <div class="leftItemInfo">
+                <p># of items stored</p>
+                <h1>1,224</h1>
+            </div>
             <hr>
-            <div class="labelContainer">
-                <label><p>Add description</p><input type="text" v-model="data.description" placeholder="Enter a description"/></label>
-                <label><p>Add image</p><input type="text" v-model="data.image" placeholder="Enter a image"/></label>
-            </div>
-            <div class="buttonContainer">
-                <button id="buttonSignIn"><p>Add category</p></button>  
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="containerRight">
+        <button @click="toggleAddCategory" class="buttonCategory">
+            <h4>Set up category</h4>
+            <p>Create new category</p>
+        </button>
+        <button @click="toggleAddProduct" class="buttonProduct">
+            <h4>Add new product</h4>
+            <p>Store an item</p>
+        </button>
+    </div>
 </default-layout>
 </template>
 
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout'
 import axios from '../axios-common'
-
 </script>
 
 <script>
+import AddCategory from '../components/AddCategory'
+import AddProduct from '../components/AddProduct'
+
 export default {
     name: 'CompanyPage',
+    components: { AddCategory, AddProduct },
     data() {
         return {
             info: null,
+            showAddCategory: false,
+            showAddProduct: false,
             data: {
                 description: '',
                 image: '',
@@ -63,6 +65,12 @@ export default {
             })
             .then(response => (this.info = response.data))
             .catch((error) => console.log(error.response.data))
+        },
+        toggleAddCategory() {
+            this.showAddCategory = !this.showAddCategory
+        },
+        toggleAddProduct() {
+            this.showAddProduct = !this.showAddProduct
         }
     },
     mounted() {
@@ -73,19 +81,6 @@ export default {
 </script>
 
 <style scoped>
-
-.container {
-    display: flex;
-    flex-direction: column;
-}
-.containerProductline {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-.containerProductline ul {
-    background-color: grey;
-}
 h3 {
     font-family: 'Inter';
     font-style: normal;
@@ -93,38 +88,29 @@ h3 {
     font-size: 24px;
     line-height: 32px;
 }
-
-.containerForm {
-    display: flex;
-    flex-direction: row;
-    padding: 24px;
+/* Styling left side */
+.containerLeft {
+    width: 70%;
+    background-color: white;
 }
 
-.form {
+.leftHeader {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding: 24px;
+    padding: 48px;
+}
+.leftItemInfo h1 {
+    font-size: 64px;
 }
 
-.labelContainer {
-    display: flex;
-    gap: 24px;
-}
-
-.labelContainer label {
+/* Styling right side */
+.containerRight {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    width: 30%;
+    background-color: green;
 }
 
-.buttonContainer button {
-    width: 100%;
-}
-
-hr {
-    border: none;
-    background-color: #dfdfdf;
-    height: 0.5px;
-}
+/* Buttons Components */
 </style>
