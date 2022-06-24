@@ -6,7 +6,7 @@
         <div class="leftHeader">
             <div class="leftItemInfo">
                 <p># of items stored</p>
-                <h1>1,224</h1>
+                <h1>{{ info }}</h1>
             </div>
             <hr>
         </div>
@@ -39,6 +39,8 @@ export default {
     data() {
         return {
             info: null,
+            infoProduct: null,
+            test: null,
             showAddCategory: false,
             showAddProduct: false,
             data: {
@@ -63,18 +65,32 @@ export default {
                     Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
                 }
             })
-            .then(response => (this.info = response.data))
+            .then(response => {
+                this.info = Object.keys(response.data).length;
+            })
+            .catch((error) => console.log(error.response.data))
+        },
+        getProduct() {
+            axios.get('/product', {
+                headers: {
+                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+                }
+            })
+            .then(response => (this.infoProduct = response.data))
             .catch((error) => console.log(error.response.data))
         },
         toggleAddCategory() {
             this.showAddCategory = !this.showAddCategory
+            this.getProductLine()
         },
         toggleAddProduct() {
             this.showAddProduct = !this.showAddProduct
+            this.getProductLine()
         }
     },
     mounted() {
         this.getProductLine()
+        this.getProduct()
     }
 }
 

@@ -22,7 +22,6 @@
     flex-direction: column;
     justify-content: center;
     gap: 12px;
-    flex:1;
 }
 
 .menuItems a {

@@ -58,4 +58,10 @@ button {
     background: #000000;
 }
 
+hr {
+  border: none;
+  height: 2px;
+  background-color: #F3F3F4;
+}
+
 </style>
