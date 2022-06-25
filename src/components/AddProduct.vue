@@ -1,5 +1,5 @@
 <template>
-    <div class="backdrop">
+    <div @click.self="closeAddProduct" class="backdrop">
         <div class="addCategory">
             <button @click="closeAddProduct" class="close"><p>x</p></button>
             <div class="containerForm">
@@ -7,15 +7,20 @@
                     <h3>Add product</h3>
                     <hr>
                     <div class="labelContainer">
-                        <label><p>Add name</p><input type="text" v-model="data.name" placeholder="Enter a name"/></label>
+                        <label><p>Add name</p><input type="text" v-model="data.name" placeholder="Enter a name" required/></label>
+                        <label for="genre">Add category
+                        <select v-model="data.descriptionProductline" required>
+                        <option v-for="category in infoProduct" :value="category.description" :key="category.id"> {{category.description}} </option>
+                        </select>
+                        </label>
                     </div>
                     <div class="labelContainer">
-                        <label><p>Add description</p><input type="text" v-model="data.description" placeholder="Enter a description"/></label>
-                        <label><p>Add image</p><input type="text" v-model="data.image" placeholder="Enter a image"/></label>
+                        <label><p>Add description</p><input type="text" v-model="data.description" placeholder="Enter a description" required/></label>
+                        <label><p>Add image</p><input type="text" v-model="data.image" placeholder="Enter a image" required/></label>
                     </div>
                     <div class="labelContainer">
-                        <label><p>Add price</p><input type="number" v-model="data.price" placeholder="Enter a price"/></label>
-                        <label><p>Add stock</p><input type="number" v-model="data.stock" placeholder="Enter a stock"/></label>
+                        <label><p>Add price</p><input type="number" v-model="data.price" placeholder="Enter a price" required/></label>
+                        <label><p>Add stock</p><input type="number" v-model="data.stock" placeholder="Enter a stock" required/></label>
                     </div>
                     <div class="buttonContainer">
                         <button id="buttonSignIn"><p>Add product</p></button>  
@@ -35,6 +40,7 @@ export default {
     data() {
         return {
             info: null,
+            infoProduct: null,
             showAddCategory: false,
             data: {
                 name: '',
@@ -42,6 +48,7 @@ export default {
                 image: '',
                 stock: '',
                 price: '',
+                descriptionProductline: '',
             }
         }
     },
@@ -57,8 +64,23 @@ export default {
             })
             .then((response) => console.log(response))
             .catch((error) => console.log(error.response.data))
+        },
+        getProductLine() {
+            axios.get('/productline', {
+                headers: {
+                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+                }
+            })
+            .then(response => {
+                this.infoProduct = response.data;
+            })
+            .catch((error) => console.log(error.response.data))
         }
-    }
+    },
+    mounted() {
+        this.getProductLine()
+
+    }    
 }
 </script>
 

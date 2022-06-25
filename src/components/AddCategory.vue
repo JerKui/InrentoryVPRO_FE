@@ -1,5 +1,5 @@
 <template>
-    <div class="backdrop">
+    <div @click.self="closeAddCategory" class="backdrop">
         <div class="addCategory">
             <button @click="closeAddCategory" class="close"><p>x</p></button>
             <div class="containerForm">
@@ -7,8 +7,8 @@
                     <h3>Add category</h3>
                     <hr>
                     <div class="labelContainer">
-                        <label><p>Add description</p><input type="text" v-model="data.description" placeholder="Enter a description"/></label>
-                        <label><p>Add image</p><input type="text" v-model="data.image" placeholder="Enter a image"/></label>
+                        <label><p>Add category name</p><input type="text" v-model="data.description" placeholder="Enter a genre name" required/></label>
+                        <label><p>Add image</p><input type="text" v-model="data.image" placeholder="Enter a image" required/></label>
                     </div>
                     <div class="buttonContainer">
                         <button id="buttonSignIn"><p>Add category</p></button>  

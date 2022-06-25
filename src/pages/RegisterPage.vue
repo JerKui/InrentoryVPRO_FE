@@ -1,7 +1,10 @@
 <template>
 <div class="containerLoginRegister">
+    <div class="circle"></div>
+    <div class="registerForm">
     <div class="leftSignIn">
         <form v-on:submit.prevent="submitForm">
+            <h2>Register now</h2>
             <div class="registerName">
                 <div class="registerFirst">
                    <label style="margin-bottom: -12px;">First Name
@@ -16,113 +19,95 @@
             <input v-model="form.email" type="email" name="email" placeholder="Enter your email here"/></label>
             <label style="margin-bottom: -12px;">Password
             <input v-model="form.password" type="password" name="password" placeholder="Enter your password here"/></label>
-            <button id="buttonRegister"><p>Register now</p></button>
-            <a href="/login">Already have a account</a>
+                <div class="buttons">
+                <button class="login"><p>Register now</p></button>
+                <div class="register"><a href="/login">Already have an account</a></div>
+                </div>
         </form>
     </div>
-    <div class="rightSignIn">
-        <div class="background">
-        </div>
     </div>
 </div>
 </template>
 
 
 <style scoped>
-
+.circle { 
+    top: 15%;
+    left: 30%;
+}
 .containerLoginRegister {
     width: 100vw;
+    height: 100vh;
     display: flex;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
-    background-color: #F7F7F7;
-}
-
-.rightSignIn {
-    width: 50vw;
-    background-color: #F7F7F7;
+    background-color: #19173D;
 }
 
 .leftSignIn {
+    padding: 24px;
+    padding-bottom: 38px;
     display: flex;
     justify-content: center;
-    padding: 48px;
-    width: 50vw;
+    align-items: center;
+    width: 25vw;
+    background-color: #262450;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.027);
+    background-blend-mode: overlay;
 }
 
 form {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 24px;
-}
-
-input[type="email"], input[type="password"], input[type="text"] {
-    height: 40px;
-    border: 1px solid #E8E8E8;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 24px;
-    padding-left: 12px;
-    color: #585757;
-    overflow: hidden;
-}
-
-button {
-    color: white;
-    height: 40px;
-    background: #000000;
-    border: none;
-    overflow: hidden;
-}
-
-.background {
-  background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
-  background-size: 400% 400%;
-  animation: Gradient 15s ease infinite;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  padding:0;
-  margin:0px;
-}
-
-button p {
-    font-family: 'Inter';
+    gap: 18px;
 }
 
 label {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 3px;
 }
 
-/* Animate Background*/
-@keyframes Gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 .registerName {
     display: flex;
+    flex-direction: row;
     gap: 24px;
-    width: 100%;
 }
 
 .registerFirst, .registerLast {
-    width: 100%;
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: 24px;
+}
+
+.login {
+    width: 7.5%;
+    position: absolute;
+    box-shadow: 0px 3px 20px rgba(0, 83, 100, 0.11), 0px 5px 40px #00d9ff49;
+}
+
+.buttons {
+    padding-top: 6px;
+}
+.register {
+    display: flex;
+    justify-content: end;
+    padding-left: 50%;
+    padding-right: 12px;
+    align-items: center;
+    width: 30%;
+    height: 30px;
+    background: #19173D;
+    border: 0px solid rgba(255, 255, 255, 0.205);
+    border-radius: 12px;
+}
+
+.register p {
+    font-size: 12px;
+    color: #7B78AA;
 }
 </style>
 

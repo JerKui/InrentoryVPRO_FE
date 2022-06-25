@@ -1,84 +1,87 @@
 <template>
 <div class="containerLoginRegister">
-    <div class="leftSignIn">
-        <form v-on:submit.prevent="submitForm">
-            <p style="color: red;" >{{message}}</p> 
-            <label style="padding-bottom: -24px;">Email
-            <input v-model="form.email" type="email" name="email" placeholder="Enter your email here"/></label>
-            <label style="padding-bottom: -12px;">Password
-            <input v-model="form.password" type="password" name="password" placeholder="Enter your password here"/></label>
-            <button id="buttonSignIn"><p>Log in</p></button>
-            <a href="/register">Register here</a>
-        </form>
-    </div>
-    <div class="rightSignIn">
-        <div class="background">
-        </div>
+    <div class="loginform">
+        <div class="circle"></div>
+        <div class="leftSignIn">
+            <form v-on:submit.prevent="submitForm">
+                <h2>Log in</h2>
+                <label style="padding-bottom: -24px;">Email
+                <input v-model="form.email" type="email" name="email" placeholder="Enter your email"/></label>
+                <div v-if="emailError" class="error"> {{ emailError }}</div>
+                <label style="padding-bottom: -12px;">Password
+                <input v-model="form.password" type="password" name="password" placeholder="Enter your password"/></label>
+                <div v-if="passwordError"> {{ passwordError }}</div>
+                <div class="buttons">
+                <button class="login"><p>Log in</p></button>
+                <div class="register"><a href="/register">Register here</a></div>
+                </div>
+            </form>
+        </div>       
     </div>
 </div>
 </template>
 
 <style scoped>
-
 .containerLoginRegister {
     width: 100vw;
-    display: flex;
-    justify-items: center;
-    align-items: center;
-    background-color: #F7F7F7;
-}
-
-.rightSignIn {
-    width: 50vw;
-    background-color: #F7F7F7;
-}
-
-.leftSignIn {
-    padding: 48px;
+    height: 100vh;
     display: flex;
     justify-content: center;
-    width: 50vw;
+    align-items: center;
+    background-color: #19173D;
+}
+.leftSignIn {
+    padding: 24px;
+    padding-bottom: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20vw;
+    background-color: #262450;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.027);
+    background-blend-mode: overlay;
 }
 
 form {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 24px;
-}
-
-.background {
-  background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
-  background-size: 400% 400%;
-  animation: Gradient 15s ease infinite;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  padding:0;
-  margin:0px;
+    gap: 18px;
 }
 
 label {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 3px;
 }
 
-/* Animate Background*/
-@keyframes Gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.login {
+    width: 7.5%;
+    position: absolute;
+    box-shadow: 0px 3px 20px rgba(0, 83, 100, 0.11), 0px 5px 40px #00d9ff49;
 }
 
+.buttons {
+    padding-top: 6px;
+}
+.register {
+    display: flex;
+    justify-content: end;
+    padding-left: 40%;
+    padding-right: 12px;
+    align-items: center;
+    width: 30%;
+    height: 30px;
+    background: #19173D;
+    border: 0px solid rgba(255, 255, 255, 0.205);
+    border-radius: 12px;
+}
+
+.register p {
+    font-size: 12px;
+    color: #7B78AA;
+}
 </style>
 
 <script>
@@ -92,7 +95,9 @@ export default {
                 email: '',
                 password: ''
             },
-            message: ''
+            message: '',
+            emailError: '',
+            passwordError: '',
         }
     },
     setup() {
