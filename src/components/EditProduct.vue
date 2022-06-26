@@ -3,10 +3,10 @@
         <div class="circle"></div>
         <div class="addCategory">
             <div class="containerForm">
-                <form class="form" form v-on:submit.prevent="postProduct">
-                    <h2>+ Add product</h2>
+                <form class="form" form v-on:submit.prevent="putProduct">
+                    <h2>+ {{oneProduct}}</h2>
                     <div class="labelContainer">
-                        <label><p>Add name</p><input type="text" v-model="data.name" placeholder="Enter a name" required/></label>
+                        <label><p>Add Name</p><input type="text" v-model="data.name" placeholder="Enter a name" required/></label>
                         <label for="genre">Add category
                         <select v-model="data.descriptionProductline" required>
                         <option v-for="category in infoProduct" :value="category.description" :key="category.id"> {{category.description}} </option>
@@ -22,7 +22,7 @@
                         <label><p>Add stock</p><input type="number" v-model="data.stock" placeholder="Enter a stock" required/></label>
                     </div>
                     <div class="buttonContainer">
-                        <button id="buttonSignIn"><p>Add product</p></button>  
+                        <button id="buttonSignIn"><p>Update product</p></button>  
                     </div>
                 </form>
             </div>
@@ -36,15 +36,14 @@ import axios from '../axios-common'
 import { defineProps, toRefs, onMounted } from 'vue'
 
 const props = defineProps({
-    allProducts: Array
+    oneProduct: Number
 })
 
-const { allProducts } = toRefs(props)
+const { oneProduct } = toRefs(props)
 
 onMounted(() => {
 }) 
-console.log(allProducts)
-
+console.log(oneProduct.value)
 </script>
 
 <script>
@@ -68,7 +67,7 @@ export default {
         closeAddProduct() {
             this.$emit('close')
         },
-        postProduct() {
+        putProduct() {
             axios.post('/product', this.data, {
                 headers: {
                     Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
@@ -91,9 +90,9 @@ export default {
     },
     mounted() {
         this.getProductLine()
-
+    }
     }    
-}
+
 </script>
 
 <style>

@@ -1,6 +1,8 @@
 <template>
 <div v-if="showAddCategory"><AddCategory @close="toggleAddCategory"/></div>
 <div v-if="showAddProduct"><AddProduct @close="toggleAddProduct"/></div>
+<div v-if="showEditProduct"><EditProduct @close="toggleEditProduct" :oneProduct="oneProduct"/></div>
+<!-- <available-products @openEditProduct="(event) => openEditProduct(event)"></available-products> -->
 <default-layout>
 <div class="container">
     <!-- <button @click="toggleAddCategory" class="buttonCategory">
@@ -10,11 +12,11 @@
     <div class="section1">
         <div class="section1_top">
             <h2> {{ productCount }}</h2>
-            <h4>Available products</h4>
+            <h4 @click="showInformation()">Available products</h4>
             <div class="lightbar"></div>
         </div>
         <div class="section1_middle">     
-            <div class="product" v-for="product in productData" :key="product.id">
+            <div class="product" v-for="(product) in productData" :key="product.id" @click="getInformation(product)">
                 <div class="product_left">
                     <div class="product_left_left">
                         <div class="productimage">
@@ -35,12 +37,43 @@
         </div>
         <div class="section1_bottom">
             <font-awesome-icon icon="fa-solid fa-plus" class="test" @click="toggleAddProduct"/>
-            <font-awesome-icon icon="fa-solid fa-trash-can" class="test"/>
-            <font-awesome-icon icon="fa-solid fa-pencil" class="test" />
+            <font-awesome-icon icon="fa-solid fa-trash-can" class="test" @click="deleteProduct"/>
+            <font-awesome-icon icon="fa-solid fa-pencil" class="test" @click="toggleEditProduct"/>
             <div class="line"></div>
         </div>
     </div>
     <div class="section2">
+        <div class="section1_top">
+            <h2> {{ categoryCount }}</h2>
+            <h4 @click="showInformation()">Available categories</h4>
+            <div class="lightbar"></div>
+        </div>
+        <div class="section1_middle">     
+            <div class="product" v-for="(category) in categoryData" :key="category.id" @click="getInformation(category)">
+                <div class="product_left">
+                    <div class="product_left_left">
+                        <div class="productimage">
+                            <font-awesome-icon icon="fa-solid fa-pencil"/>
+                        </div>
+                    </div>
+                    <div class="product_left_right">
+                        <h3>{{ category.description }}</h3>
+                        <h4>{{ category.image }}</h4>
+                    </div>
+                </div>
+                <div class="product_right">
+                    <div class="product_right_content">
+                        <h5> + {{ category.stock }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section1_bottom">
+            <font-awesome-icon icon="fa-solid fa-plus" class="test" @click="toggleAddCategory"/>
+            <font-awesome-icon icon="fa-solid fa-trash-can" class="test" @click="deleteProduct"/>
+            <font-awesome-icon icon="fa-solid fa-pencil" class="test" @click="toggleEditProduct"/>
+            <div class="line"></div>
+        </div>        
     </div>
     <div class="section3">
     </div>
@@ -49,26 +82,58 @@
 </template>
 
 <script setup>
+import { onMounted} from 'vue'
 import DefaultLayout from '@/layouts/DefaultLayout'
+// import AvailableProducts from '@/components/AvailableProducts'
 import axios from '../axios-common'
+
+
+
+onMounted(() => {
+    axios.get('/product')
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+})
+
+// function openEditProduct(e) {
+//     console.log(e)
+// }
+
 </script>
 
 <script>
 import AddCategory from '../components/AddCategory'
 import AddProduct from '../components/AddProduct'
+import EditProduct from '../components/EditProduct'
 
 export default {
     name: 'CompanyPage',
-    components: { AddCategory, AddProduct },
+    components: { AddCategory, AddProduct, EditProduct },
     data() {
         return {
             productCount: null,
             categoryCount: null,
             productData: null,
+            categoryData: null,
+            selectedProduct: null,
             productColumns: ['id', 'name', 'description', 'image', 'stock', 'price', 'category'],
             test: null,
             showAddCategory: false,
             showAddProduct: false,
+            showEditProduct: false,
+            dataProduct: {
+                id: '',
+                name: '',
+                description: '',
+                image: '',
+                stock: '',
+                price: '',
+                descriptionProductline: '',
+            },
             data: {
                 description: '',
                 image: '',
@@ -76,6 +141,9 @@ export default {
         }
     },
     methods: {
+        updatePage() {
+            this.$emit('update')
+        },
         postProductline() {
             axios.post('/productline', this.data, {
                 headers: {
@@ -92,7 +160,7 @@ export default {
                 }
             })
             .then(response => {
-                this.infos = response.data
+                this.categoryData = response.data,
                 this.categoryCount = Object.keys(response.data).length
             })
             .catch((error) => console.log(error.response.data))
@@ -105,18 +173,42 @@ export default {
             })
             .then(response => (
                 this.productData = response.data,
-                console.log(response.data),
                 this.productCount = Object.keys(response.data).length
             ))
             .catch((error) => console.log(error.response.data))
         },
+        deleteProduct() {
+            axios.delete('/product/' + this.dataProduct.id, {
+                headers: {
+                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+                }
+            })
+            .then(response => (
+                console.log(response.data),
+                console.log(this.dataProduct),
+                this.getProduct()
+            ))
+            .catch((error) => console.log(error.response.data), console.log(this.deletedProduct.id))
+        },        
         toggleAddCategory() {
             this.showAddCategory = !this.showAddCategory
+            this.getProduct()
             this.getProductLine()
         },
         toggleAddProduct() {
             this.showAddProduct = !this.showAddProduct
+            this.getProduct()
             this.getProductLine()
+        },
+        toggleEditProduct() {
+            this.showEditProduct = !this.showEditProduct
+            this.getProduct()
+            this.getProductLine()
+        },
+        getInformation(index) {
+            this.dataProduct = index
+        },
+        showInformation() {
         }
     },
     mounted() {

@@ -4,7 +4,7 @@
         <div class="addCategory">
             <div class="containerForm">
                 <form class="form" form v-on:submit.prevent="postProductline">
-                    <h2>+ Add category</h2>
+                    <h2>+ Add Category</h2>
                     <div class="labelContainer">
                         <label><p>Add category name</p><input type="text" v-model="data.description" placeholder="Enter a genre name" required/></label>
                         <label><p>Add image</p><input type="text" v-model="data.image" placeholder="Enter a image" required/></label>
@@ -63,6 +63,7 @@
 
 <script setup>
 import axios from '../axios-common'
+
 </script>
 
 <script>
