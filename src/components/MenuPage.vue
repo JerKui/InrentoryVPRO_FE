@@ -1,6 +1,6 @@
 <template>
 <div class="containerMenu">
-    <div class="line"></div>
+    <!-- <div class="line"></div> -->
     <div class="menuItems">
         <router-link to="'/" ><font-awesome-icon icon="fa fa-home"/></router-link>
         <router-link to="'/products"><font-awesome-icon icon="fa fa-search"/></router-link>
@@ -13,6 +13,13 @@
 
 <style scoped>
 
+.total {
+    display: flex;
+}
+.circle {
+    top: 300px;
+    left: -300px;
+}
 .line {
     position: absolute;
     width: 5px;
@@ -25,7 +32,6 @@
     border-radius: 100px;
 }
 .containerMenu {
-    display: flex;
     height: 100vh;
 }
 
@@ -42,14 +48,22 @@
 .menuItems a {
     font-size: 18px;
     color: #7B78AA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s ease;
 }
 
 .menuItems a:hover {
+    filter: drop-shadow(0px 0px 25px rgb(0, 213, 255)) !important;
+    color: #00D7FF;
+    padding-left: 18px;
 }
 
 .router-link-active {
     color: #00D7FF !important;
-    -webkit-filter: drop-shadow(0px 12px 7px rgba(255, 18, 18, 0.5));
     filter: drop-shadow(0px 0px 25px rgb(0, 213, 255)) !important;
 }
 

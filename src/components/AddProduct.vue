@@ -1,11 +1,10 @@
 <template>
     <div @click.self="closeAddProduct" class="backdrop">
+        <div class="circle"></div>
         <div class="addCategory">
-            <button @click="closeAddProduct" class="close"><p>x</p></button>
             <div class="containerForm">
                 <form class="form" form v-on:submit.prevent="postProduct">
-                    <h3>Add product</h3>
-                    <hr>
+                    <h2>+ Add product</h2>
                     <div class="labelContainer">
                         <label><p>Add name</p><input type="text" v-model="data.name" placeholder="Enter a name" required/></label>
                         <label for="genre">Add category
@@ -84,13 +83,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.circle {
+    top: 140px;
+    left: 590px;
+}
+
 .addCategory {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: white;
     gap: 24px;
+    background: rgba(38, 36, 80, 1);
+    background-blend-mode: overlay;
+    border: 2px solid rgba(255, 255, 255, 0.027);
+    border-radius: 18px;
 }
 .addCategory button {
     justify-content: flex-end;

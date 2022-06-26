@@ -33,7 +33,7 @@
 <style scoped>
 .circle { 
     top: 15%;
-    left: 30%;
+    left: 28.5%;
 }
 .containerLoginRegister {
     width: 100vw;

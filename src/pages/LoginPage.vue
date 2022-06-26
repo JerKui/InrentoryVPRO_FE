@@ -43,6 +43,11 @@
     background-blend-mode: overlay;
 }
 
+.circle {
+    top: 52%;
+    left: 53.5%;
+}
+
 form {
     display: flex;
     flex-direction: column;
