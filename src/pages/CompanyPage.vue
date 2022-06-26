@@ -1,9 +1,9 @@
 <template>
-<div v-if="showAddCategory"><AddCategory @close="toggleAddCategory"/></div>
-<div v-if="showAddProduct"><AddProduct @close="toggleAddProduct"/></div>
-<div v-if="showEditProduct"><EditProduct @close="toggleEditProduct" :oneProduct="oneProduct"/></div>
 <!-- <available-products @openEditProduct="(event) => openEditProduct(event)"></available-products> -->
 <default-layout>
+    <div v-if="showAddCategory"><AddCategory @close="toggleAddCategory"/></div>
+<div v-if="showAddProduct"><AddProduct @close="toggleAddProduct"/></div>
+<div v-if="showEditProduct"><EditProduct @close="toggleEditProduct" :oneProduct="oneProduct"/></div>
 <div class="container">
     <!-- <button @click="toggleAddCategory" class="buttonCategory">
             <p>Add category</p>
