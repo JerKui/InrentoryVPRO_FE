@@ -47,10 +47,6 @@ const { open } = toRefs(props)
 function close() {
     emit('closeAddProduct', false)
 }
-
-// function update() {
-//     emit('updateProduct')
-// }
 </script>
 
 <script>
@@ -58,10 +54,6 @@ export default {
 
     data() {
         return {
-            info: null,
-            infoProduct: null,
-            showAddCategory: false,
-            isActive: false,
             data: {
                 name: '',
                 description: '',
@@ -79,7 +71,6 @@ export default {
         postProduct() {
             this.$emit('updateProduct', this.data)
         },
-
         getProductLine() {
             axios.get('/productline', {
                 headers: {

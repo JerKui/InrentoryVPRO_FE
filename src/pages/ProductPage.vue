@@ -31,7 +31,6 @@ import { ref, onMounted } from 'vue'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import AddProduct from '@/components/AddProduct'
 import AvailableProducts from '@/components/AvailableProducts'
-// import TestModal from '@/components/TestModal'
 
 let allProducts = ref([])
 let cancerMaagd = 'Maagd'

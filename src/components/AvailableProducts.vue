@@ -8,7 +8,7 @@
         <div class="section1_middle">     
             <div class="product" v-for="(product) in allProducts" :key="product.id" @click="getInformation(product)">
                 <div class="product_left">
-                    <div class="product_left_left" :class="{ active: showMobileMenu }" @click="showMobileMenu = !showMobileMenu" >
+                    <div class="product_left_left">
                         <div class="productimage">
                             <font-awesome-icon icon="fa-solid fa-pencil"/>
                         </div>
@@ -28,7 +28,7 @@
         <div class="section1_bottom">
             <font-awesome-icon icon="fa-solid fa-plus" class="test" @click="open"/>
             <font-awesome-icon icon="fa-solid fa-trash-can" class="test" @click="deleteProduct"/>
-            <font-awesome-icon icon="fa-solid fa-pencil" class="test" @click="edit"/>
+            <font-awesome-icon icon="fa-solid fa-pencil" class="test"/>
             <div class="line"></div>
         </div>
     </div>
@@ -36,7 +36,6 @@
 
 <script setup>
 import { defineEmits, defineProps, toRefs } from 'vue'
-import axios from '../axios-common'
 
 const props = defineProps ({
     allProducts: Array,
@@ -45,7 +44,7 @@ const props = defineProps ({
 
 const { allProducts } = toRefs(props)
 const { cancerMaagd } = toRefs(props)
-const emit = defineEmits(['openEditProduct', 'deleteProduct', 'editsProduct', 'openAddProduct'])
+const emit = defineEmits(['openAddProduct'])
 
 function open() {
     emit('openAddProduct', true)
@@ -58,12 +57,6 @@ export default {
     name: 'CompanyPage',
     data() {
         return {
-            productCount: null,
-            productData: null,
-            selectedProduct: null,
-            data: {
-                showMobileMenu: false
-            },
             dataProduct: {
                 id: '',
                 name: '',
@@ -75,68 +68,20 @@ export default {
             }
         }
     },
-    methods: {
-        updatePage() {
-            this.$emit('update')
-        },
-        postProductline() {
-            axios.post('/productline', this.data, {
-                headers: {
-                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
-                }
-            })
-            .then((response) => console.log(response))
-            .catch((error) => console.log(error.response.data))
-        },
-        getProductLine() {
-            axios.get('/productline', {
-                headers: {
-                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
-                }
-            })
-            .then(response => {
-                this.categoryData = response.data,
-                this.categoryCount = Object.keys(response.data).length
-            })
-            .catch((error) => console.log(error.response.data))
-        },
-        getProduct() {
-            axios.get('/product', {
-                headers: {
-                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
-                }
-            })
-            .then(response => (
-                this.productData = response.data,
-                this.productCount = Object.keys(response.data).length
-            ))
-            .catch((error) => console.log(error.response.data))
-        },       
+    methods: {     
         getInformation(index) {
+            console.log(index)
             this.dataProduct = index
-        },
-        showInformation() {
         },
         deleteProduct() {
             this.$emit('deleteProduct', this.dataProduct.id)
         },
-        myFilter: function() {
-            this.isActive = !this.isActive
-        }
 
     },
-    mounted() {
-        this.getProductLine()
-        this.getProduct()
-    }
 }
 </script>
 
 <style>
-
-.showMobileMenu {
-    background-color: yellow;
-}
 
 .section1 {
     display: flex;
