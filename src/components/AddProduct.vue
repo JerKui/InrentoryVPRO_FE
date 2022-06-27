@@ -1,6 +1,7 @@
 <template>
-    <div @click.self="closeAddProduct" class="backdrop">
-        <div class="circle"></div>
+<Dialog as="div" @close="close" :open="open">
+<DialogPanel>
+    <div class="backdrop">
         <div class="addCategory">
             <div class="containerForm">
                 <form class="form" form v-on:submit.prevent="postProduct">
@@ -28,32 +29,39 @@
             </div>
         </div>
     </div>
+    </DialogPanel>
+    </Dialog>
 </template>
 
 <script setup>
 import axios from '../axios-common'
-
-import { defineProps, toRefs, onMounted } from 'vue'
+import { Dialog, DialogPanel } from '@headlessui/vue'
+import { defineProps, defineEmits, toRefs } from 'vue'
 
 const props = defineProps({
-    allProducts: Array
+    open: Boolean,
 })
+const emit = defineEmits(['closeAddProduct', 'updateProduct'])
+const { open } = toRefs(props)
 
-const { allProducts } = toRefs(props)
+function close() {
+    emit('closeAddProduct', false)
+}
 
-onMounted(() => {
-}) 
-console.log(allProducts)
-
+// function update() {
+//     emit('updateProduct')
+// }
 </script>
 
 <script>
 export default {
+
     data() {
         return {
             info: null,
             infoProduct: null,
             showAddCategory: false,
+            isActive: false,
             data: {
                 name: '',
                 description: '',
@@ -66,17 +74,12 @@ export default {
     },
     methods: {
         closeAddProduct() {
-            this.$emit('close')
+            this.$emit('poopy')
         },
         postProduct() {
-            axios.post('/product', this.data, {
-                headers: {
-                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
-                }
-            })
-            .then((response) => console.log(response))
-            .catch((error) => console.log(error.response.data))
+            this.$emit('updateProduct', this.data)
         },
+
         getProductLine() {
             axios.get('/productline', {
                 headers: {
@@ -87,7 +90,7 @@ export default {
                 this.infoProduct = response.data;
             })
             .catch((error) => console.log(error.response.data))
-        }
+        },
     },
     mounted() {
         this.getProductLine()

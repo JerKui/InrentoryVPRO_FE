@@ -1,14 +1,17 @@
 <template>
 <div>
     <menu-page/>
-  <slot/>  
+        <slot/> 
 </div>
-
 </template>
 
 <style scoped>
 div {
     display: flex;
+}
+
+.main {
+  background-color: yellow;
 }
 </style>
 
