@@ -1,6 +1,5 @@
 <template>
 <default-layout>
-    <div class="style">
     <available-products 
     @openAddProduct="(options) => openAddProducts(options)" 
     @editProduct="(options) => openAddProducts(options)" 
@@ -8,7 +7,6 @@
     :cancerMaagd="cancerMaagd" 
     @deleteProduct="(product) => deleteProducts(product)">
     </available-products>
-    </div>
     <add-product :open="open" 
     @closeAddProduct="(options) => closeAddProduct(options)" 
     @updateProduct="(product) => updateProducts(product)">

@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .circle {
     top: 140px;
     left: 590px;

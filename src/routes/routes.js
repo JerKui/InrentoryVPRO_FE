@@ -1,7 +1,6 @@
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import DashboardPage from '@/pages/DashboardPage';
-import MenuPage from '@/components/MenuPage';
 import CustomerPage from '@/pages/CustomerPage';
 import ProductPage from '@/pages/ProductPage';
 import CompanyPage from '@/pages/CompanyPage';
@@ -23,11 +22,6 @@ const routes = [
         path: '/',
         name: 'DashboardPage',
         component: DashboardPage
-    },
-    {
-      path: '/menupage',
-      name: 'MenuPage',
-      component: MenuPage
     },
     {
       path: '/customer',
