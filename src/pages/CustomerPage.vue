@@ -3,6 +3,7 @@
     <customer-component
     @openModal="(options) => openAddCustomers(options)"
     :allOrders="allOrders"
+    :allProducts="allProducts"
     ></customer-component>
     <order-popup
     :open="status"
@@ -20,6 +21,7 @@ import axios from '@/axios-common'
 import { ref, onMounted } from 'vue'
 
 let allOrders = ref([])
+let allProducts = ref([])
 // Reference Boolean om het modal 'AddCustomer' te openen of te sluiten
 let status = ref(false)
 
@@ -34,6 +36,8 @@ function closeAddCustomers(options){
 }
 
 onMounted(() => {
+    getAllProducts()
+    getProductsofOrder()
     axios.get('/orders', {
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
@@ -44,7 +48,20 @@ onMounted(() => {
         console.log(allOrders.value)
     ))
     .catch((error) => console.log(error.response.data))
-})
+}
+)
+
+function getProductsofOrder() {
+    axios.get('/orders/orderList1', {
+    headers: {
+        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+    }
+    })
+    .then(response => (
+        console.log(response.data)
+    ))
+    .catch((error) => console.log(error.response.data))
+}
 
 function createOrders(order) {
     axios.post('/orders', order, {
@@ -58,4 +75,16 @@ function createOrders(order) {
     .catch((error) => console.log(error.response.data))
 }
 
+function getAllProducts() {
+    axios.get('/product', {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then(response => (
+        allProducts.value = response.data,
+        console.log(allProducts.value)
+    ))
+    .catch((error) => console.log(error.response.data))
+}
 </script>

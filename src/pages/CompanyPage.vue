@@ -128,10 +128,7 @@ export default {
             dataProduct: {
                 id: '',
                 name: '',
-                description: '',
-                image: '',
                 stock: '',
-                price: '',
                 descriptionProductline: '',
             },
             data: {

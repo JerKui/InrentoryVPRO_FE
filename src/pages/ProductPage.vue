@@ -4,7 +4,6 @@
     @openAddProduct="(options) => openAddProducts(options)" 
     @editProduct="(options) => openAddProducts(options)" 
     :allProducts="allProducts" 
-    :cancerMaagd="cancerMaagd" 
     @deleteProduct="(product) => deleteProducts(product)">
     </available-products>
     <add-product :open="open" 
@@ -31,7 +30,7 @@ import AddProduct from '@/components/AddProduct'
 import AvailableProducts from '@/components/AvailableProducts'
 
 let allProducts = ref([])
-let cancerMaagd = 'Maagd'
+// let cancerMaagd = 'Maagd'
 let open = ref(false)
 
 function openAddProducts(options) {
