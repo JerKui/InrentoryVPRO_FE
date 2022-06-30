@@ -46,6 +46,7 @@ onMounted(() => {
 
 function createOrders(order) {
     // add order to array
+    console.log(order)
     axios.post('/orders', order, {
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
@@ -123,6 +124,4 @@ function deleteProductToOrder(product) {
     })
     .catch((error) => console.log(error.response.data))
 }
-
-
 </script>

@@ -8,19 +8,19 @@
         Dashboard
       </router-link>
       
-      <router-link to="'/products" >
-        <font-awesome-icon icon="fa fa-home"/>
-        Products
-      </router-link>
-
-      <router-link to="'/" >
+      <router-link to="'/orders" >
         <font-awesome-icon icon="fa fa-home"/>
         Orders
       </router-link>
-
-      <router-link to="'/customer" >
+      
+      <router-link to="'/inventory" >
         <font-awesome-icon icon="fa fa-home"/>
-        Customers
+        Inventory
+      </router-link>
+
+      <router-link to="'/companies" >
+        <font-awesome-icon icon="fa fa-home"/>
+        Companies
       </router-link>
           
         

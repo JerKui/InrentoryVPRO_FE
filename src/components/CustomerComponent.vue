@@ -1,15 +1,10 @@
 <template>
     <div class="flex--1">
-        <div class="ordersHeader">
-            <v-btn
-            elevation="2"
-            ></v-btn>
+        <div class="header">
             <h1>Orders</h1>
-            <button @click="open">+ Add order</button>
+            <button @click="open">+ Add order</button>   
         </div>
-        <div class="orderList">
-                    <div class="orders" :key="allOrders" v-if="Object.keys(allOrders).length > 0">
-           <div class="order" v-for="(order) in allOrders" :key="order.id">
+        <div class="order" v-for="(order) in allOrders" :key="order">
             <div class="orderHeader">
                 <div class="orderHeaderLeft">
                     <div class="orderHeader_item">
@@ -55,18 +50,12 @@
                 <h3>ESTIMATED RETURN DATE:</h3>
                 <p>{{ convertDate(order.returnDate) }}</p>
             </div>
-           </div>
-        </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-
-.orderList {
-    overflow: scroll;
-}
-.ordersHeader button {
+.header button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,7 +108,7 @@ p {
     color: black;
 }
 
-.ordersHeader{
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -302,6 +291,7 @@ export default {
 
     data() {
         return {
+            search: '',
             data: {
                 product: '',
                 order: '',
@@ -328,6 +318,12 @@ export default {
 
     },
     mounted() {
-    }    
+    }, 
+    computed: {
+        filteredOrders() {
+            console.log('test')
+            return this.allOrders.filter(order => order.body.includes(this.search), console.log('test'))
+        }
+    }
 }
 </script>

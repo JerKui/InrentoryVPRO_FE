@@ -49,9 +49,7 @@ onMounted(() => {
         }
     })
     .then(response => (
-        allProducts.value = response.data,
-        console.log(allProducts.value)
-        // this.productCount = Object.keys(response.data).length
+        allProducts.value = response.data
     ))
     .catch((error) => console.log(error.response.data))
 

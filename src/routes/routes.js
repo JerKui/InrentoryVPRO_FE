@@ -24,17 +24,17 @@ const routes = [
         component: DashboardPage
     },
     {
-      path: '/customer',
+      path: '/orders',
       name: 'CustomerPage',
       component: CustomerPage
     },
     {
-      path: '/company',
+      path: '/companies',
       name: 'CompanyPage',
       component: CompanyPage
     },
     {
-      path: '/products',
+      path: '/inventory',
       name: 'ProductPage',
       component: ProductPage
     }

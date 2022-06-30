@@ -1,7 +1,7 @@
 <template>
 <div class="flex--1">
     <div class="productsHeader">
-        <h1>Inventory {{allProducts.name}}</h1>
+        <h1>Inventory</h1>
         <button @click="open">+ Add product</button>
     </div>
     <div class="productHeader">
