@@ -1,7 +1,5 @@
 <template>
 <default-layout>
-<div class="container">
-</div>
 </default-layout>
 </template>
 

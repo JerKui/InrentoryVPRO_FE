@@ -1,6 +1,9 @@
 <template>
     <div class="flex--1">
         <div class="ordersHeader">
+            <v-btn
+            elevation="2"
+            ></v-btn>
             <h1>Orders</h1>
             <button @click="open">+ Add order</button>
         </div>
