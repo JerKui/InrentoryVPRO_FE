@@ -6,6 +6,7 @@
             <div class="ui form">
             <div class="fields">
                 <form form v-on:submit.prevent="postOrder"  @close="close">
+                    <h2>+ Add order</h2>
                     <div class="field">
                         <label>Name
                         <input v-model="formOrder.name" type="text" placeholder="Name" required>
@@ -89,6 +90,96 @@ export default {
     flex-direction: column;
     justify-content: center;
     background-color: white;
+    padding: 24px;
+}
+
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: black;
+}
+.circle {
+    top: 140px;
+    left: 590px;
+}
+
+.addCategory {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 24px;
+    background: #fff;
+    background-blend-mode: overlay;
+    border: 2px solid rgba(255, 255, 255, 0.027);
+}
+.addCategory button {
+    justify-content: flex-end;
+    width: 50px;
+}
+.backdrop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    position: fixed;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.labelContainer {
+    display: flex;
+    gap: 24px;
+}
+
+.labelContainer label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.buttonContainer button {
+    width: 100%;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 0px;
+  background-color: white;
+  border-bottom: 2px solid #A5A8AB;
+  color: black;
+}
+
+button {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background: #E08864;
+    padding: 28px;
+    border-radius: 0px;
+}
+
+button p {
+    color: white;
+}
+
+
+p, label {
+    color: black;
+}
+
+input::placeholder {
+    color: #A5A8AB;
 }
 
 </style>

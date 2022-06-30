@@ -2,7 +2,7 @@
 <div class="flex--1">
     <div class="productsHeader">
         <h1>Inventory {{allProducts.name}}</h1>
-        <button @click="open">+</button>
+        <button @click="open">+ Add product</button>
     </div>
     <div class="productHeader">
         <div class="productHeaderId"><h3>ID</h3></div>

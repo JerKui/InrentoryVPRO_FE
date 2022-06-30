@@ -1,7 +1,11 @@
 <template>
     <div class="flex--1">
-        <h1 @click="open">Orders</h1>
-        <div class="orders" :key="allOrders" v-if="Object.keys(allOrders).length > 0">
+        <div class="ordersHeader">
+            <h1>Orders</h1>
+            <button @click="open">+ Add order</button>
+        </div>
+        <div class="orderList">
+                    <div class="orders" :key="allOrders" v-if="Object.keys(allOrders).length > 0">
            <div class="order" v-for="(order) in allOrders" :key="order.id">
             <div class="orderHeader">
                 <div class="orderHeaderLeft">
@@ -46,14 +50,34 @@
             </div>
             <div class="orderFooter">
                 <h3>ESTIMATED RETURN DATE:</h3>
-                <p>{{ order.returnDate }}</p>
+                <p>{{ convertDate(order.returnDate) }}</p>
             </div>
            </div>
+        </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+
+.orderList {
+    overflow: scroll;
+}
+.ordersHeader button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border: 2px solid #F0F0F0;
+    padding: 28px;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    border-radius: 0px;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+}
 
 select{
     display: flex;
@@ -92,6 +116,13 @@ p {
     color: black;
 }
 
+.ordersHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
 .orderContentLeft_item {
     display: flex;
     flex-direction: row;
