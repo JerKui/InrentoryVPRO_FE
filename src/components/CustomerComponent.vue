@@ -1,17 +1,17 @@
 <template>
     <div class="flex--1">
         <h1 @click="open">Orders</h1>
-        <div class="orders">
+        <div class="orders" :key="allOrders" v-if="Object.keys(allOrders).length > 0">
            <div class="order" v-for="(order) in allOrders" :key="order.id">
             <div class="orderHeader">
                 <div class="orderHeaderLeft">
                     <div class="orderHeader_item">
                         <h3>ORDER PLACED</h3>
-                        <p> {{ order.orderDate }}</p>
+                        <p> {{ convertDate(order.orderDate) }}</p>
                     </div>
                     <div class="orderHeader_item">
                         <h3>TOTAL PRODUCTS</h3>
-                        <p>15</p>
+                        <p> {{ order.products.length }}</p>
                     </div>
                     <div class="orderHeader_item">
                         <h3>ORDER BY</h3>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="orderHeaderRight">
                     <div class="orderHeader_itemRight">
-                        <h3>ORDER # 112-1782113-0807425</h3>
+                        <h3>ORDER # {{ order.id }}</h3>
                         <p>Order Details</p>
                     </div> 
                 </div>
@@ -30,14 +30,18 @@
                 <div class="orderContentLeft">
                     <h3>{{ order.name }}</h3>
                     <div class="orderContentLeft_items">
+                        <div class="orderContentLeft_item" v-for="(product) in order.products" :key="product">
+                            <h4> {{ product.name }}</h4>
+                            <button @click="deleteProductToOrder(product.name, order.name)">x</button>
+                        </div>
                     </div>
                 </div>
                 <div class="orderContentRight">
-                        <select>
+                        <select v-model="data.product">
                             <option v-for="(product) in allProducts" :key="product.name">{{ product.name }}</option>
                         </select>
-                    <button class="closeButton">ADD PRODUCT</button>
-                    <button class="deleteButton">DELETE ORDER</button>
+                    <button class="closeButton" @click="addProductToOrder(order.name)">ADD PRODUCT</button>
+                    <button class="deleteButton" @click="deleteAnOrder(order.name)">DELETE ORDER</button>
                 </div>
             </div>
             <div class="orderFooter">
@@ -78,12 +82,30 @@ h3 {
     color: #A5A8AB;
 }
 
+h4 {
+    color: #A5A8AB;
+}
+
 p {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     color: black;
 }
 
+.orderContentLeft_item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    }
+
+.orderContentLeft_item button {
+    height: 24px;
+    width: 24px;
+    border-radius: 0px;
+    border: none;
+    background: black;
+}
 .containers {
     display: flex;
     flex-direction: column;
@@ -213,7 +235,7 @@ import { defineEmits, defineProps, toRefs} from 'vue'
 // import axios from '@/axios-common'
 
 // let products = []
-const emit = defineEmits(['openModal'])
+const emit = defineEmits(['openModal', 'addProductOrder', 'deleteOrder', 'deleteProductOrder'])
 const props = defineProps ({
     allOrders: Array,
     allProducts: Array,
@@ -227,19 +249,51 @@ function open() {
     emit('openModal', true)
 }
 
-// function getProducts(name) {
-//     axios.get('/orders/' + name , {
-//     headers: {
-//         Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
-//     }
-//     })
-//     .then(response => (
-//         products = response.data,
-//         console.log(products),
-//         console.log('dit werkt')
-//     ))
-//     .catch((error) => console.log(error.response.data))
-// }
+function convertDate(date) {
+    if (date === null) {
+        return 'none'
+    } else {
+        let newDate = new Date(date)
+        let day = newDate.getDate()
+        let month = newDate.getMonth() + 1
+        let year = newDate.getFullYear()
+        return `${day}-${month}-${year}`
+    }
+}
 
+</script>
 
+<script>
+export default {
+
+    data() {
+        return {
+            data: {
+                product: '',
+                order: '',
+            },
+            deleteProduct: {
+                product: '',
+                order: '',
+            }
+        }
+    },
+    methods: {
+        addProductToOrder(name) {
+            this.data.order = name
+            this.$emit('addProductOrder', this.data)
+        },
+        deleteAnOrder(name) {
+            this.$emit('deleteOrder', name)
+        },
+        deleteProductToOrder(product, order) {
+            this.deleteProduct.product = product
+            this.deleteProduct.order = order
+            this.$emit('deleteProductOrder', this.deleteProduct)
+        }
+
+    },
+    mounted() {
+    }    
+}
 </script>

@@ -5,17 +5,17 @@
         <button @click="open">+</button>
     </div>
     <div class="productHeader">
-        <div class="productHeaderContent"><h3>ID</h3></div>
-        <div class="productHeaderContent"><h3>Name</h3></div>
+        <div class="productHeaderId"><h3>ID</h3></div>
+        <div class="productHeaderName"><h3>Name</h3></div>
         <div class="productHeaderContent"><h3>Description</h3></div>
         <div class="productHeaderContent"><h3>Stock</h3></div>
         <div class="productHeaderContent"><h3></h3></div>
         <div class="productHeaderContent"><h3></h3></div>
     </div>
     <div class="productItem" v-for="(product) in allProducts" :key="product.id">
-        <div class="productHeaderContentItem"><h3># {{product.id}}</h3></div>
-        <div class="productHeaderContentItem"><h3>{{ product.name }}</h3></div>
-        <div class="productHeaderContentItem"><h3>{{ product.description }}</h3></div>
+        <div class="productHeaderContentId"><h3># {{product.id}}</h3></div>
+        <div class="productHeaderContentName"><h3>{{ product.name }}</h3></div>
+        <div class="productHeaderContentItem"><h3>{{ product.productline.name }}</h3></div>
         <div class="productHeaderContentItem"><h3>{{ product.stock }}</h3></div>
         <div class="productHeaderContentItem"><button>DELETE</button></div>
         <div class="productHeaderContentItem"><button>EDIT</button></div>
@@ -138,6 +138,15 @@ p {
     width: 20%;
 }
 
+.productHeaderId {
+    display: flex;
+    width: 8%;
+}
+.productHeaderName {
+    display: flex;
+    width: 32%;
+}
+
 .productHeaderContentItem button {
     width: 100%;
     padding: 0px;
@@ -147,6 +156,19 @@ p {
     display: flex;
     align-items: center;
     width: 20%;
+}
+
+.productHeaderContentId {
+    display: flex;
+    align-items: center;
+    width: 8%;
+
+}
+
+.productHeaderContentName {
+    display: flex;
+    align-items: center;
+    width: 32%;
 }
 
 .productHeader {

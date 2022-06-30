@@ -10,7 +10,7 @@
                         <label><p>Add name</p><input type="text" v-model="data.name" placeholder="Enter a name" required/></label>
                         <label for="genre">Add category
                         <select v-model="data.descriptionProductline" required>
-                        <option v-for="category in infoProduct" :value="category.description" :key="category.id"> {{category.name}} </option>
+                        <option v-for="category in infoProduct" :value="category.name" :key="category.id"> {{category.name}} </option>
                         </select>
                         </label>
                     </div>
@@ -72,7 +72,6 @@ export default {
             })
             .then(response => {
                 this.infoProduct = response.data;
-                console.log(this.infoProduct);
             })
             .catch((error) => console.log(error.response.data))
         },

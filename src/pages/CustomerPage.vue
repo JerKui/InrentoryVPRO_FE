@@ -1,14 +1,18 @@
 <template>
 <default-layout>
     <customer-component
+    @addProductOrder="(options) => addProductToOrder(options)"
+    @deleteProductOrder="(options) => deleteProductToOrder(options)"
     @openModal="(options) => openAddCustomers(options)"
+    @deleteOrder="(options) => deleteOrders(options)"
     :allOrders="allOrders"
     :allProducts="allProducts"
     ></customer-component>
     <order-popup
     :open="status"
     @closeModal="(options) => closeAddCustomers(options)"
-    @createOrder="(options) => createOrders(options)">
+    @createOrder="(options) => createOrders(options)"
+    >
     </order-popup>
 </default-layout>
 </template>
@@ -37,33 +41,11 @@ function closeAddCustomers(options){
 
 onMounted(() => {
     getAllProducts()
-    getProductsofOrder()
-    axios.get('/orders', {
-        headers: {
-            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
-        }
-    })
-    .then(response => (
-        allOrders.value = response.data,
-        console.log(allOrders.value)
-    ))
-    .catch((error) => console.log(error.response.data))
-}
-)
-
-function getProductsofOrder() {
-    axios.get('/orders/orderList1', {
-    headers: {
-        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
-    }
-    })
-    .then(response => (
-        console.log(response.data)
-    ))
-    .catch((error) => console.log(error.response.data))
-}
+    getAllOrders()
+})
 
 function createOrders(order) {
+    // add order to array
     axios.post('/orders', order, {
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
@@ -75,6 +57,34 @@ function createOrders(order) {
     .catch((error) => console.log(error.response.data))
 }
 
+function deleteOrders(order) {
+    // delete order out of arra
+    axios.delete('/orders/' + order, {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then((response) => {
+        console.log(response)
+        allOrders.value = allOrders.value.filter(item => item.name !== order)
+    })
+    .catch((error) => console.log(error.response.data))
+}
+
+function addProductToOrder(order) {
+    axios.put('/orders', order, {   
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then((response) => {
+        const allOrdArrayObj = allOrders.value.find(orderObject => orderObject.id === response.data.id)
+        const allOrdArrayIndex = allOrders.value.indexOf(allOrdArrayObj)
+        allOrders.value[allOrdArrayIndex] = response.data
+    })
+    .catch((error) => console.log(error.response.data))
+}
+
 function getAllProducts() {
     axios.get('/product', {
         headers: {
@@ -82,9 +92,37 @@ function getAllProducts() {
         }
     })
     .then(response => (
-        allProducts.value = response.data,
-        console.log(allProducts.value)
+        allProducts.value = response.data
     ))
     .catch((error) => console.log(error.response.data))
 }
+
+function getAllOrders() {
+    axios.get('/orders', {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then(response => (
+        allOrders.value = response.data
+    ))
+    .catch((error) => console.log(error.response.data))
+}
+
+function deleteProductToOrder(product) {
+    console.log(product)
+    axios.put('/orders/delete', product, {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then((response) => {
+        const allOrdArrayObj = allOrders.value.find(orderObject => orderObject.id === response.data.id)
+        const allOrdArrayIndex = allOrders.value.indexOf(allOrdArrayObj)
+        allOrders.value[allOrdArrayIndex] = response.data
+    })
+    .catch((error) => console.log(error.response.data))
+}
+
+
 </script>
