@@ -2,39 +2,55 @@
     <div class="flex--1">
         <div class="header">
             <h1>Orders</h1>
+            <input type="text" placeholder="Search">
             <button @click="open">+ Add order</button>   
         </div>
         <div class="order" v-for="(order) in allOrders" :key="order">
             <div class="orderHeader">
                 <div class="orderHeaderLeft">
                     <div class="orderHeader_item">
-                        <h3>ORDER PLACED</h3>
-                        <p> {{ convertDate(order.orderDate) }}</p>
+                        <h3>Order placed</h3>
+                        <div> {{ convertDate(order.orderDate) }}</div>
                     </div>
                     <div class="orderHeader_item">
-                        <h3>TOTAL PRODUCTS</h3>
-                        <p> {{ order.products.length }}</p>
+                        <h3>Total products</h3>
+                        <div> {{ order.products.length }}</div>
                     </div>
                     <div class="orderHeader_item">
-                        <h3>ORDER BY</h3>
-                        <p>Jerry Kuijper</p>
+                        <h3>Order by</h3>
+                        <div>Jerry Kuijper</div>
                     </div>                    
                 </div>
                 <div class="orderHeaderRight">
                     <div class="orderHeader_itemRight">
-                        <h3>ORDER # {{ order.id }}</h3>
-                        <p>Order Details</p>
+                        <h3>Order #{{ order.id }}</h3>
+                        <div>Order Details</div>
                     </div> 
                 </div>
 
             </div>
             <div class="orderContent">
                 <div class="orderContentLeft">
-                    <h3>{{ order.name }}</h3>
-                    <div class="orderContentLeft_items">
-                        <div class="orderContentLeft_item" v-for="(product) in order.products" :key="product">
-                            <h4> {{ product.name }}</h4>
-                            <button @click="deleteProductToOrder(product.name, order.name)">x</button>
+                    <div>{{ order.name }}</div>
+                    <div class="orderContentLeft_items" v-for="(product) in order.products" :key="product">
+                        <div class="orderContentLeft_item">
+                            <div class="itemcontent">
+                                <div class="categorypiece">
+                                    <div class="category" :class="
+                                        [product.productline.name === 'Camera' ? 'categoryblue' : 'category', 
+                                        product.productline.name === 'Microphone' ? 'categorymicrophone' : 'category',
+                                        product.productline.name === 'Harddrive' ? 'categoryharddrive' : 'category']
+                                    "> 
+                                    {{ product.productline.name }}
+                                    </div>
+                                </div>                                
+                                <div class="namepiece">
+                                    {{ product.name }}
+                                </div>
+                                <div class="deletepiece" @click="deleteProductToOrder(product.name, order.name)">
+                                    <button>woehhoe</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,20 +58,47 @@
                         <select v-model="data.product">
                             <option v-for="(product) in allProducts" :key="product.name">{{ product.name }}</option>
                         </select>
-                    <button class="closeButton" @click="addProductToOrder(order.name)">ADD PRODUCT</button>
-                    <button class="deleteButton" @click="deleteAnOrder(order.name)">DELETE ORDER</button>
+                    <button class="closeButton" @click="addProductToOrder(order.name)">Add product</button>
+                    <div class="buttons">
+                       <button class="deleteButton" @click="deleteAnOrder(order.name)">Delete order</button>
+                       <button class="completedButton" @click="deleteAnOrder(order.name)">Complete order</button> 
+                    </div>
                 </div>
             </div>
             <div class="orderFooter">
-                <h3>ESTIMATED RETURN DATE:</h3>
-                <p>{{ convertDate(order.returnDate) }}</p>
+                <h3>Estimated return date:</h3>
+                <div>{{ convertDate(order.returnDate) }}</div>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-.header button {
+input, select {
+  width: 100%;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 0px;
+  background-color: white;
+  border-bottom: 1px solid #a5a8ab5e;
+  color: black;
+}
+
+button p {
+    color: white;
+}
+
+
+p, label {
+    color: black;
+}
+
+input::placeholder {
+    color: #A5A8AB;
+}
+
+
+button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,16 +110,22 @@
     color: black;
     border-radius: 0px;
     cursor: pointer;
-    position: sticky;
-    top: 0;
+}
+.flex--1 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-x: hidden;
+    padding: 48px;
 }
 
 select{
     display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
     height: 40px;
-    border: 2px solid #F0F0F0;
+    border-bottom-color: #a5a8ab5e;
     font-size: 16px;
     line-height: 24px;
     padding-left: 12px;
@@ -98,37 +147,25 @@ h3 {
     color: #A5A8AB;
 }
 
-h4 {
-    color: #A5A8AB;
-}
-
 p {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     color: black;
 }
-
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
     top: 0;
+    gap: 60px;
 }
 .orderContentLeft_item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 24px;
-    }
-
-.orderContentLeft_item button {
-    height: 24px;
-    width: 24px;
-    border-radius: 0px;
-    border: none;
-    background: black;
+    gap: 6px;
 }
+
 .containers {
     display: flex;
     flex-direction: column;
@@ -158,12 +195,21 @@ p {
     flex-direction: row;
     justify-content: space-between;
     background: #FAFAFA;
-    border: 1px solid #F0F0F0;
+    border-bottom: 2px solid #F0F0F0;
+    transition: all 0.3s ease-in-out;
 }
 
-.orderHeaderLeft {
+.order:hover .orderHeader {
+    background: #dddff55e;
+}
+
+.orderHeaderLeft  {
     display: flex;
     gap: 120px;
+}
+
+.orderHeaderLeft h3 {
+    font-weight: 300;
 }
 
 .orderHeader_itemRight {
@@ -176,48 +222,40 @@ p {
     flex-direction: row;
     justify-content: space-between;
     padding: 32px;
-    border: 1px solid #F0F0F0;
-    background: #FFFFFF;
+    border-left: 1px solid #F0F0F0;
+    border-right: 1px solid #F0F0F0;
+    background: #fafafa21;
+    gap: 24px;
 }
 
 .orderContentLeft {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-}
-
-.orderContentLeft h3 {
-    color: black;
-    font-size: 24px;
-    font-weight: 500;
-}
-
-.orderContentLeft p {
-    font-size: 20px;
-    font-weight: 400;
-    color: #A5A8AB;
+    gap: 6px;
+    width: 70%;
 }
 
 .orderContentLeft_items {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    background: #FAFAFA;
+    padding: 6px 12px 6px 12px;
+    border-bottom: 2px solid #F0F0F0;
 }
-
 .orderContentRight {
+    width: 30%;
     display: flex;
     flex-direction: column;
-    gap: 6px;
 }
 
 .orderContentRight .closeButton {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #E08864;
+    background: #9E9E9E;
     border: 1px solid #F0F0F0;
     padding: 28px;
-    width: 250px;
+
     font-size: 14px;
     font-weight: 500;
     color: white;
@@ -232,7 +270,6 @@ p {
     background: white;
     border: 2px solid #F0F0F0;
     padding: 28px;
-    width: 250px;
     font-size: 14px;
     font-weight: 500;
     color: black;
@@ -245,11 +282,83 @@ p {
     gap: 24px;
     flex-direction: row;
     border: 1px solid #F0F0F0;
-    background: #FFFFFF;
-
+    background: #FAFAFA;
 }
 
+.itemcontent {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+}
+.categorypiece {
+    display: flex;
+    width: 10%;
+}
 
+.namepiece {
+    display: flex;
+    width: 80%;
+}
+
+.deletepiece {
+    display: flex;
+    justify-content: end;
+    width: 10%;
+}
+.category {
+    display: flex;
+    justify-content: center;
+    background: rgba(230, 230, 230, 0.63);
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.categoryblue {
+    background: rgba(0, 91, 228, 0.301);
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.categorymicrophone {
+    background: rgba(228, 0, 0, 0.301);
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.categoryharddrive {
+    background: rgba(27, 228, 0, 0.301);
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+}
+
+.deleteButton{
+    width: 50%;
+}
+
+.completedButton {
+    width: 50%;
+}
 </style>
 
 <script setup>

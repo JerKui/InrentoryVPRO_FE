@@ -2,18 +2,19 @@
 <div class="flex--1">
     <div class="productsHeader">
         <h1>Inventory</h1>
+        <input type="text" v-model="input" placeholder="Search">
         <button @click="open">+ Add product</button>
     </div>
     <div class="productHeader">
         <div class="productHeaderContent">
-            <div class="productHeaderContent_id">
+            <div class="productHeaderContent_id" @click="sortFilterId">
                 <h3>#</h3>
             </div>
             <div class="productHeaderContent_category">
-                <h3>Category</h3>
+                <h3 @click="sortFilterCategory">Category</h3>
             </div>
             <div class="productHeaderContent_name">
-                <h3>Name</h3>
+                <h3 @click="sortFilterName">Name</h3>
             </div>
             <div class="productHeaderContent_stock">
                 <h3>Stock</h3>
@@ -27,14 +28,19 @@
         </div>
         <hr>
     </div>
-    <div class="productItem" v-for="(product) in allProducts" :key="product.id">
+    <div class="productItem" v-for="(product) in searchFilterInput(input)" :key="product.id">
         <div class="productHeader">
             <div class="productItemContent">
                 <div class="productItemContent_id">
                     # {{ product.id}}
                 </div>
                 <div class="productItemContent_category">
-                    <div class="category">
+                    <div class="category" 
+                    :class="
+                    [product.productline.name === 'Camera' ? 'categoryblue' : 'category', 
+                    product.productline.name === 'Microphone' ? 'categorymicrophone' : 'category',
+                     product.productline.name === 'Harddrive' ? 'categoryharddrive' : 'category']
+                    ">
                         {{ product.productline.name }}
                     </div>
                 </div>
@@ -42,18 +48,21 @@
                     {{ product.name }}
                 </div>
                 <div class="productItemContent_stock">
-                    {{ product.stock }}
+                    <div class="stock">
+                        {{ product.stock }}
+                    </div>
                 </div>
                 <div class="productItemContent_edit">
-                    edit
+                    <button @click="product.hide = !product.hide">Edit</button>
                 </div>
                 <div class="productItemContent_delete">
-                    <h3 @click="product.hide = !product.hide">delete</h3>
+                    <button>Delete</button>
                 </div>
             </div>
             <div class="hide" v-show="product.hide">
             <div class="hideContent">
                 <form form v-on:submit.prevent="updateProduct(product)">
+                <div class="formspace">
                     <div class="hideContent_section1">
                         <div class="field">
                             <label>Product name
@@ -77,8 +86,9 @@
                     </div>
                     <div class="button">
                         <button type="submit" class="update">Update</button>
-                        <button class="cancel" @click="product.hide = !product.hide">Cancel</button>
+                        <button type="reset" class="cancel" @click="reloadPage">Cancel</button>
                     </div>
+                </div>
                 </form>
             </div>
             </div>
@@ -91,7 +101,7 @@
 
 <script setup>
 import axios from '../axios-common'
-import { defineEmits, defineProps, toRefs} from 'vue'
+import { defineEmits, defineProps, toRefs, ref } from 'vue'
 
 const props = defineProps ({
     allProducts: Array,
@@ -101,15 +111,56 @@ const props = defineProps ({
 const { allProducts } = toRefs(props)
 // const { cancerMaagd } = toRefs(props)
 const emit = defineEmits(['openAddProduct', 'updateProduct'])
-
+let input = ref('');
 function open() {
     emit('openAddProduct', true)
 }
 
-// function changeStatus() {
-//     status.value = !status.value;
-//     console.log(status)
-// }
+function reloadPage() {
+    window.location.reload();
+}
+
+function sortFilterCategory () {
+    allProducts.value.sort((a, b) => {
+        if (a.productline.name < b.productline.name) {
+            return -1;
+        }
+        if (a.productline.name > b.productline.name) {
+            return 1;
+        }
+        return 0;
+    })
+}
+
+function sortFilterId () {
+    allProducts.value.sort((a, b) => {
+        if (a.id < b.id) {
+            return -1;
+        }
+        if (a.id > b.id) {
+            return 1;
+        }
+        return 0;
+    })
+}
+
+function sortFilterName() {
+    allProducts.value.sort((a, b) => {
+        if (a.name < b.name) {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
+    })
+}
+
+function searchFilterInput(search) {
+    return allProducts.value.filter(product => {
+        return product.name.toLowerCase().includes(search.toLowerCase())
+    })
+}
 </script>
 
 <script>
@@ -164,17 +215,8 @@ input, select {
   box-sizing: border-box;
   border-radius: 0px;
   background-color: white;
-  border-bottom: 2px solid #A5A8AB;
+  border-bottom: 1px solid #a5a8ab5e;
   color: black;
-}
-
-button {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    background: #E08864;
-    padding: 28px;
-    border-radius: 0px;
 }
 
 button p {
@@ -218,8 +260,7 @@ select{
     justify-content: center;
     align-items: center;
     height: 40px;
-    border-top: 2px solid #F0F0F0;
-    border-bottom-color: #A5A8AB;
+    border-bottom-color: #a5a8ab5e;
     font-size: 16px;
     line-height: 24px;
     padding-left: 12px;
@@ -251,10 +292,12 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 60px;
 }
 
 .productHeaderContent {
     display: flex;
+    padding: 10px;
 }
 
 .productHeaderContent h3 {
@@ -284,8 +327,17 @@ p {
 .productHeaderContent_delete {
     width: 7.5%
 }
-
+.productItemContent {
+    background-color: #FAFAFA;
+    padding: 10px;
+}
+.productItemContent_id, .productItemContent_category, .productItemContent_name, .productItemContent_stock, .productItemContent_edit, .productItemContent_delete {
+    display: flex;
+    align-items: center;
+}
 .productItemContent_id {
+    color: #A5A8AB;
+    font-weight: 200;
     width: 5%
 }
 
@@ -293,12 +345,59 @@ p {
     width: 10%
 }
 
+.category {
+    background: rgba(230, 230, 230, 0.63);
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.categoryblue {
+    background: rgba(0, 91, 228, 0.301);
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.categorymicrophone {
+    background: rgba(228, 0, 0, 0.301);
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.categoryharddrive {
+    background: rgba(27, 228, 0, 0.301);
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
 .productItemContent_name {
     width: 60%
 }
 
 .productItemContent_stock {
     width: 10%
+}
+
+.stock {
+    width: 5%;
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border: 2px solid #F0F0F0;
+    padding: 15px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .productItemContent_edit {
@@ -327,6 +426,13 @@ p {
 
 .hide {
     width: 70%;
+    background-color: #fafafa21
+}
+
+.formspace {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .hideContent_section1 {
@@ -353,18 +459,18 @@ p {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background: #E08864;
+    background: rgba(0, 0, 0, 0.377);
     color: white;
     border: 0px;
     padding: 28px;
+    border: 2px solid rgba(0, 0, 0, 0.034);
     border-radius: 0px;
 }
+.productItemContent {
+    transition: all 0.3s ease-in-out;
+}
+.productHeader:hover .productItemContent { 
+    background: #dddff55e;
 
-.button .cancel {
-    width: 10%;
-    background: black;
-    color: white;
-    border: 0px;
-    border-radius: 0px;
 }
 </style>

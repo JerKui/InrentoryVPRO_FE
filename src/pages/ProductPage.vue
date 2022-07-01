@@ -69,6 +69,7 @@ function updateProducts(product) {
 }
 
 function updateThisProduct(product) {
+    console.log(product)
     axios.put('/product' , product, {
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
