@@ -3,7 +3,6 @@
         <div class="header">
             <h1>Companies</h1>
             <button @click="open">+ Add company</button>
-            <button @click="openedit">+ Edit company</button>  
         </div>
         <div v-for="company in allCompanies" :key="company.id">
         <button @click="openedit(company.id)">+ Edit company</button>  

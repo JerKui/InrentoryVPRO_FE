@@ -115,7 +115,6 @@ input {
 }
 
 select { 
-    appearance: none;
     background: #19173D;
     border: 1px solid rgba(255, 255, 255, 0.164);
     border-radius: 12px;

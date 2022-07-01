@@ -4,6 +4,7 @@
     @openAddProduct="(options) => openAddProducts(options)" 
     @editProduct="(options) => openAddProducts(options)" 
     :allProducts="allProducts" 
+    @updateProduct="(options) => updateThisProduct(options)"
     @deleteProduct="(product) => deleteProducts(product)">
     </available-products>
     <add-product :open="open" 
@@ -63,6 +64,28 @@ function updateProducts(product) {
     })
     .then((response) => {
         allProducts.value.push(response.data)
+    })
+    .catch((error) => console.log(error.response.data))
+}
+
+function updateThisProduct(product) {
+    axios.put('/product' , product, {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then((response) => {
+        if (response.status === 200) {
+            // update the company in the list
+            console.log(response.data)
+            allProducts.value.forEach((company, index) => {
+                if (company.id === product.id) {
+                    allProducts.value[index] = response.data
+                }
+            })
+        } else {
+            console.log(response.data)
+        }
     })
     .catch((error) => console.log(error.response.data))
 }

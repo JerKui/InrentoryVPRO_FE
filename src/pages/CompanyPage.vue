@@ -15,6 +15,7 @@
     :editCompany="editCompany"
     :open="editstatus"
     @closeEditCompany="(options) => closeEditCompanies(options)"
+    @updateCompany="(options) => updateThisCompany(options)"
     >
     </companyedit-popup>
 </default-layout>
@@ -81,6 +82,7 @@ function getCompany(id) {
 }
 
 function createCompanies(options) {
+    
     axios.post('/company', options, {
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
@@ -89,6 +91,29 @@ function createCompanies(options) {
     .then((response) => {
         if (response.status === 200) {
             allCompanies.value.push(response.data)
+        } else {
+            console.log(response.data)
+        }
+    })
+    .catch((error) => console.log(error.response.data))
+}
+
+function updateThisCompany(options) {
+    console.log(options)
+    axios.put('/company/' + options.id, options, {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then((response) => {
+        if (response.status === 200) {
+            // update the company in the list
+            console.log(response.data)
+            allCompanies.value.forEach((company, index) => {
+                if (company.id === options.id) {
+                    allCompanies.value[index] = response.data
+                }
+            })
         } else {
             console.log(response.data)
         }

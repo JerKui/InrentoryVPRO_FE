@@ -3,30 +3,30 @@
     <DialogPanel>
         <div class="backdrop">
             <div class="form">
-                <form form v-on:submit.prevent="postCompany"  @close="close">
-                    <h2>+ Add company</h2>
+                <form form v-on:submit.prevent="updateCompany"  @close="close">
+                    <h2>+ Edit Company</h2>
                     <div class="field">
                         <label>Company name
-                        <input type="text" placeholder="Fill in name of the company" v-bind:value="editCompany.name" required>
+                        <input type="text" placeholder="Fill in name of the company" v-model="editCompany.name" required>
                         </label>
                     </div>
                     <div class="field">
                         <label>Phone
-                        <input type="text" placeholder="Fill in phonenumber" v-bind:value="editCompany.phone" required>
+                        <input type="text" placeholder="Fill in phonenumber" v-model="editCompany.phone" required>
                         </label>
                     </div>
                     <div class="field">
                         <label>Address
-                        <input type="text" placeholder="Fill in address" v-bind:value="editCompany.address" required>
+                        <input type="text" placeholder="Fill in address" v-model="editCompany.address" required>
                         </label>
                     </div>
                     <div class="field">
                         <label>Postalcode
-                        <input type="text" placeholder="Fill in postal" v-bind:value="editCompany.postalcode" required>
+                        <input type="text" placeholder="Fill in postal" v-model="editCompany.postalcode" required>
                         </label>
                     </div>
                     <div class="button">
-                        <button>Add company</button>
+                        <button @close="close">Update</button>
                     </div>
                 </form>
             </div>    
@@ -45,7 +45,7 @@ const props = defineProps({
 })
 const { editstatus } = toRefs(props)
 const { editCompany } = toRefs(props)
-const emit = defineEmits(['closeEditCompany', 'createCompany'])
+const emit = defineEmits(['closeEditCompany', 'createCompany', 'updateCompany'])
 
 function close() {
     emit('closeEditCompany', false)
@@ -54,7 +54,15 @@ function close() {
 </script>
 
 <script>
+export default {
+    methods: {
+        updateCompany() {
+            this.$emit('updateCompany', this.editCompany)
+        }
+    }
+}
 </script>
+
 
 <style scoped>
 .backdrop {
