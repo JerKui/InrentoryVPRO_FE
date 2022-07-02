@@ -203,7 +203,8 @@ export default {
         updateProduct(product) {
             if (confirm("Are you sure you want to update this product?")) {
                 this.$emit('updateProduct', product)
-                console.log(product)
+                this.product.hide = !product.hide
+
             } else {
                 window.location.reload()
             }
@@ -315,14 +316,17 @@ p {
 }
 
 .productHeaderContent_id {
+    cursor:pointer;
     width: 5%
 }
 
 .productHeaderContent_category {
+    cursor:pointer;
     width: 10%
 }
 
 .productHeaderContent_name {
+    cursor:pointer;
     width: 60%
 }
 
@@ -389,6 +393,7 @@ p {
     padding-left: 6px;
     padding-right: 6px;
 }
+
 .productItemContent_name {
     width: 60%
 }
