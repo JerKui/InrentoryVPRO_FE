@@ -4,9 +4,46 @@
             <h1>Companies</h1>
             <button @click="open">+ Add company</button>
         </div>
-        <div v-for="company in allCompanies" :key="company.id">
-        <button @click="openedit(company.id)">+ Edit company</button>  
-        {{ company }}
+        <div class="companywrap">
+            <div class="companypopup" v-for="company in allCompanies" :key="company.id">
+                <div class="companycontent">
+                    <div class="companycontentdivided">
+                    <h2>{{ company.name }}</h2>
+                    </div>
+                </div>
+                <div class="companyinformation">
+                    <div class="companyinfo">
+                        <div class="icon">
+                            <font-awesome-icon class="address" icon="fa-solid fa-map" />  
+                        </div>
+                        <div class="content">
+                            <h3>Address</h3>
+                             <p>{{ company.address }}</p>  
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="companyinfo">
+                        <div class="icon">
+                            <font-awesome-icon class="postal" icon="fa-solid fa-map-location-dot" />
+                        </div>
+                        <div class="content">
+                            <h3>Postalcode</h3>
+                             <p>{{ company.postalcode }}</p>  
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="companyinfo">
+                        <div class="icon">
+                            <font-awesome-icon class="phone" icon="fa-solid fa-phone" />  
+                        </div>
+                        <div class="content">
+                            <h3>Phonenumber</h3>
+                             <p>+ {{ company.phone }}</p>  
+                        </div>
+                    </div>
+                    <button @click="openedit(company.id)">+ Edit company</button>  
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -31,7 +68,6 @@ function openedit(options) {
 }
 
 </script>
-
 <style scoped>
 button {
     display: flex;
@@ -70,17 +106,18 @@ h1 {
 }
 
 h3 {
-    font-weight: 400;
+    font-weight: 300;
     color: #A5A8AB;
 }
 
 p {
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     color: black;
 }
 h2 {
-    color: red;
+    color: black;
+    font-weight: 500;
 }
 
 .flex--1 {
@@ -97,5 +134,70 @@ h2 {
     justify-content: space-between;
     align-items: center;
 }
+.companywrap {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.companypopup {
+    background-color: #FAFAFA;
+    border-bottom: 2px solid #F3F3F4;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    width: 20.55%;
+    min-height: 42%;
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+}
+
+.companypopup:hover {
+    background-color: #F2F3FB;
+}
+
+.companyinformation {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+}
+
+.companyinfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.address {
+    color: #94baf7;
+}
+
+.postal {
+    color: #a4f19a;
+}
+
+.phone {
+    color: #f19a9a;
+}
+.companycontent{
+    display: flex;
+    flex-direction: column;
+}
+
 
 </style>

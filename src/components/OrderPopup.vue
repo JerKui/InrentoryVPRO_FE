@@ -22,6 +22,13 @@
                         <input v-model="formOrder.comments" type="textarea" placeholder="Fill in comment">
                         </label>
                     </div>
+                    <div class="field">
+                        <label for="genre">Add company
+                        <select v-model="formOrder.company" required>
+                        <option v-for="company in companies" :value="company.name" :key="company.id"> {{company.name}} </option>
+                        </select>
+                        </label>
+                    </div>
                     <div class="button">
                         <button>Submit</button>
                     </div>
@@ -37,6 +44,7 @@
 <script setup>
 import { Dialog, DialogPanel } from '@headlessui/vue'
 import { defineProps, defineEmits, toRefs } from 'vue'
+import axios from '../axios-common'
 
 const props = defineProps({
     status: Boolean,
@@ -61,14 +69,30 @@ export default {
                 returnDate: '',
                 status: 0,
                 comments: '',
+                company: '',
             }
         }
     },
     methods: {
         postOrder() {
             this.$emit('createOrder', this.formOrder)
-        }
-    }
+        },
+        getCompanies() {
+            axios.get('/company', {
+                headers: {
+                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+                }
+            })
+            .then(response => {
+                this.companies = response.data;
+                console.log(this.companies)
+            })
+            .catch((error) => console.log(error.response.data))
+        },
+    },
+    mounted() {
+        this.getCompanies()
+    }    
 }
 </script>
 
@@ -151,12 +175,11 @@ h2 {
 
 input, select {
   width: 100%;
-  padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border-radius: 0px;
   background-color: white;
-  border-bottom: 2px solid #A5A8AB;
+  border-bottom: 1px solid #a5a8ab5e;
   color: black;
 }
 

@@ -8,15 +8,6 @@ import DefaultLayout from '@/layouts/DefaultLayout'
 </script>
 
 <script>
-// import axios from '../axios-common'
-
-export default {
-    name: 'TableData',
-    data() { 
-        return {
-        }
-    }
-}
 </script>
 
 <style>

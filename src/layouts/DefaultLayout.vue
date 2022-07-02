@@ -25,7 +25,11 @@
         <font-awesome-icon icon="fa-regular fa-id-card" />
         Companies
       </router-link>
-          
+      <hr>
+      <router-link @click="logOut" class="router" to="'/login" >
+        <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+        Logout
+      </router-link>
         
     </div>
   </div>
@@ -95,5 +99,36 @@
 </style>
 
 <script setup>
+function logOut() {
+  const authStore = useAuthStore()
+  return authStore.logout()
+}
+</script>
 
+<script>
+import { useAuthStore } from '../stores/authStore'
+
+export default {
+    name : 'DefaultLayout',
+    data() {
+        return {
+            form: {
+                email: '',
+                password: ''
+            },
+            message: '',
+            emailError: '',
+            passwordError: '',
+        }
+    },
+    setup() {
+        const authStore = useAuthStore()
+        return { authStore } 
+    },
+    methods: {
+        logOut() {
+            this.authStore.logout()
+        }
+    }
+}
 </script>

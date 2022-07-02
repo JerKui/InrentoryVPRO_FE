@@ -2,10 +2,10 @@
     <div class="flex--1">
         <div class="header">
             <h1>Orders</h1>
-            <input type="text" placeholder="Search">
+            <input type="text" v-model="input" placeholder="Search">
             <button @click="open">+ Add order</button>   
         </div>
-        <div class="order" v-for="(order) in allOrders" :key="order">
+        <div class="order" v-for="(order) in searchFilterInput(input)" :key="order">
             <div class="orderHeader">
                 <div class="orderHeaderLeft">
                     <div class="orderHeader_item">
@@ -18,8 +18,12 @@
                     </div>
                     <div class="orderHeader_item">
                         <h3>Order by</h3>
-                        <div>Jerry Kuijper</div>
-                    </div>                    
+                        <div>{{ order.company.name }}</div>
+                    </div>           
+                    <div class="orderHeader_item">
+                        <h3>Order status</h3>
+                        <div>{{ order.status }}</div>
+                    </div>              
                 </div>
                 <div class="orderHeaderRight">
                     <div class="orderHeader_itemRight">
@@ -48,7 +52,7 @@
                                     {{ product.name }}
                                 </div>
                                 <div class="deletepiece" @click="deleteProductToOrder(product.name, order.name)">
-                                    <button>woehhoe</button>
+                                    <button>Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -241,6 +245,11 @@ p {
     background: #FAFAFA;
     padding: 6px 12px 6px 12px;
     border-bottom: 2px solid #F0F0F0;
+    transition: all 0.3s ease-in-out;
+}
+
+.orderContentLeft_items:hover {
+    background: #dddff55e;
 }
 .orderContentRight {
     width: 30%;
@@ -291,6 +300,7 @@ p {
     flex-direction: row;
     gap: 12px;
     align-items: center;
+    transition: all 0.3s ease-in-out;
 }
 .categorypiece {
     display: flex;
@@ -363,7 +373,7 @@ p {
 
 <script setup>
 
-import { defineEmits, defineProps, toRefs} from 'vue'
+import { defineEmits, defineProps, toRefs, ref} from 'vue'
 // import axios from '@/axios-common'
 
 // let products = []
@@ -374,6 +384,7 @@ const props = defineProps ({
 })
 
 const { allOrders } = toRefs(props)
+let input = ref('');
 const { allProducts } = toRefs(props)
 
 // Hiermee geef ik een signaal aan de template om het modal te openen doormiddel van de functie openAddCustomers
@@ -393,6 +404,11 @@ function convertDate(date) {
     }
 }
 
+function searchFilterInput(search) {
+    return allOrders.value.filter(order => {
+        return order.company.name.toLowerCase().includes(search.toLowerCase())
+    })
+}
 </script>
 
 <script>
