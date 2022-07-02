@@ -72,10 +72,11 @@ export default {
         postProduct() {
             if (confirm('Are you sure you want to add this product?')) {
                 this.$emit('updateProduct', this.data)
-                this.$refs.addproduct.reset();
                 this.close();
+                this.data.name = '',
+                this.data.stock = '',
+                this.data.descriptionProductline = ''
             }
-            this.$refs.addproduct.reset();
         },
         getProductLine() {
             axios.get('/productline', {

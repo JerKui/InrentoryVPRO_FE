@@ -120,7 +120,6 @@ function updateThisCompany(options) {
     })
     .catch((error) => console.log(error.response.data))
 }
-
 </script>
 
 <script>

@@ -5,6 +5,7 @@
     @deleteProductOrder="(options) => deleteProductToOrder(options)"
     @openModal="(options) => openAddCustomers(options)"
     @deleteOrder="(options) => deleteOrders(options)"
+    @updateStatus="(options) => updateStatusOrder(options)"
     :allOrders="allOrders"
     :allProducts="allProducts"
     ></customer-component>
@@ -124,4 +125,19 @@ function deleteProductToOrder(product) {
     })
     .catch((error) => console.log(error.response.data))
 }
+
+function updateStatusOrder(options) {
+    axios.put('/orders/status', options, {
+        headers: {
+         Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then(response => {
+        const allOrdArrayObj = allOrders.value.find(orderObject => orderObject.id === response.data.id)
+        const allOrdArrayIndex = allOrders.value.indexOf(allOrdArrayObj)
+        allOrders.value[allOrdArrayIndex] = response.data
+    })
+    .catch((error) => console.log(error.response.data), console.log(this.deletedProduct.id))
+}
+
 </script>

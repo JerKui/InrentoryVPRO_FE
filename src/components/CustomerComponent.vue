@@ -67,7 +67,7 @@
                     <button class="closeButton" @click="addProductToOrder(order.name)">Add product</button>
                     <div class="buttons">
                        <button class="deleteButton" @click="deleteAnOrder(order.name)">Delete order</button>
-                       <button class="completedButton" @click="deleteAnOrder(order.name)">Complete order</button> 
+                       <button class="completedButton" @click="updateAnOrder(order.id)">Complete order</button> 
                     </div>
                 </div>
             </div>
@@ -386,7 +386,7 @@ import { defineEmits, defineProps, toRefs, ref} from 'vue'
 // import axios from '@/axios-common'
 
 // let products = []
-const emit = defineEmits(['openModal', 'addProductOrder', 'deleteOrder', 'deleteProductOrder'])
+const emit = defineEmits(['openModal', 'addProductOrder', 'deleteOrder', 'deleteProductOrder', 'updateStatus'])
 const props = defineProps ({
     allOrders: Array,
     allProducts: Array,
@@ -399,6 +399,12 @@ const { allProducts } = toRefs(props)
 // Hiermee geef ik een signaal aan de template om het modal te openen doormiddel van de functie openAddCustomers
 function open() {
     emit('openModal', true)
+}
+
+function updateAnOrder(id) {
+    if (confirm('Are you sure you want to update this order?')) {
+        emit('updateStatus', id)
+    }
 }
 
 function convertDate(date) {

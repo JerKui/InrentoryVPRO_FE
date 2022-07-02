@@ -68,8 +68,11 @@ export default {
         postCompany() {
             if (confirm('Are you sure you want to create this company?')) {
                 this.$emit('createCompany', this.formCompany)
-                this.$refs.companyform.reset();
                 this.close();
+                this.formCompany.name = '',
+                this.formCompany.phone = '',
+                this.formCompany.address = '',
+                this.formCompany.postalcode = ''
             }
         }
     }
