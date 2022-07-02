@@ -22,7 +22,9 @@
                     </div>           
                     <div class="orderHeader_item">
                         <h3>Order status</h3>
-                        <div>{{ order.status }}</div>
+                        <div class="statuscircle" :class="
+                        [order.status === 0 ? 'statuscircle_pending' : 'statuscircle_done']">
+                        </div>
                     </div>              
                 </div>
                 <div class="orderHeaderRight">
@@ -60,7 +62,7 @@
                 </div>
                 <div class="orderContentRight">
                         <select v-model="data.product">
-                            <option v-for="(product) in allProducts" :key="product.name">{{ product.name }}</option>
+                            <option v-for="(product) in filterAllProducts()" :key="product.name">{{ product.name }}</option>
                         </select>
                     <button class="closeButton" @click="addProductToOrder(order.name)">Add product</button>
                     <div class="buttons">
@@ -78,15 +80,6 @@
 </template>
 
 <style scoped>
-input, select {
-  width: 100%;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border-radius: 0px;
-  background-color: white;
-  border-bottom: 1px solid #a5a8ab5e;
-  color: black;
-}
 
 button p {
     color: white;
@@ -369,6 +362,22 @@ p {
 .completedButton {
     width: 50%;
 }
+
+.statuscircle {
+    width: 15px;
+    height: 15px;
+    background: black;
+    border-radius: 16px;
+}
+
+.statuscircle_pending {
+    background: orange;
+    border-radius: 16px;
+}
+.statuscircle_done {
+    background: greenyellow;
+    border-radius: 16px;
+}
 </style>
 
 <script setup>
@@ -409,6 +418,13 @@ function searchFilterInput(search) {
         return order.company.name.toLowerCase().includes(search.toLowerCase())
     })
 }
+
+function filterAllProducts() {
+    // if stock === 0 then filter out
+    return allProducts.value.filter(product => {
+        return product.stock > 0
+    })
+}
 </script>
 
 <script>
@@ -429,11 +445,21 @@ export default {
     },
     methods: {
         addProductToOrder(name) {
+            
             this.data.order = name
             this.$emit('addProductOrder', this.data)
+            this.allProducts.value.forEach(product => {
+                if (product.name === name) {
+                    if (product.stock === 0) {
+                        this.allProducts.value.splice(this.allProducts.value.indexOf(product), 1)
+                    }
+                }
+            })
         },
         deleteAnOrder(name) {
-            this.$emit('deleteOrder', name)
+            if(confirm('Are you sure you want to delete this order?')) {
+                this.$emit('deleteOrder', name)
+            }
         },
         deleteProductToOrder(product, order) {
             this.deleteProduct.product = product

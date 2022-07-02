@@ -4,30 +4,31 @@
         <div class="backdrop">
             <div class="form">
                 <form form v-on:submit.prevent="updateCompany"  @close="close">
-                    <h2>+ Edit Company</h2>
-                    <div class="field">
+                <div class="formContent">
+                    <div class="header">
+                        <h2>Update company</h2>
+                        <h2 @click="close">x</h2>
+                    </div>
+                    <div class="email">
                         <label>Company name
-                        <input type="text" placeholder="Fill in name of the company" v-model="editCompany.name" required>
-                        </label>
+                        <input v-model="editCompany.name" placeholder="Enter the name of the company" type="text" required/></label>   
                     </div>
-                    <div class="field">
-                        <label>Phone
-                        <input type="text" placeholder="Fill in phonenumber" v-model="editCompany.phone" required>
-                        </label>
-                    </div>
-                    <div class="field">
+                    <div class="password">
                         <label>Address
-                        <input type="text" placeholder="Fill in address" v-model="editCompany.address" required>
-                        </label>
+                        <input v-model="editCompany.address" placeholder="Enter the address of the company" type="text" required/></label>   
                     </div>
-                    <div class="field">
-                        <label>Postalcode
-                        <input type="text" placeholder="Fill in postal" v-model="editCompany.postalcode" required>
-                        </label>
+                    <div class="name">
+                        <div class="firstName">
+                            <label>Postalcode
+                            <input v-model="editCompany.postalcode" placeholder="Enter the postalcode" type="text" required/></label>
+                        </div>
+                        <div class="lastName">
+                            <label>Phone number
+                            <input v-model="editCompany.phone" placeholder="Enter the phone number" type="number" required/></label>   
+                        </div>
                     </div>
-                    <div class="button">
-                        <button @close="close">Update</button>
-                    </div>
+                    <button>Update company</button>        
+                </div>
                 </form>
             </div>    
         </div>
@@ -57,7 +58,10 @@ function close() {
 export default {
     methods: {
         updateCompany() {
-            this.$emit('updateCompany', this.editCompany)
+            if (confirm('Are you sure you want to update this company?')) {
+                this.$emit('updateCompany', this.editCompany)
+                this.close();
+            }
         }
     }
 }
@@ -75,104 +79,80 @@ export default {
     width: 100%;
     height: 100%;
 }
-
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: white;
-    padding: 24px;
+    background: #f3f3f3;
 }
 
-h2 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    color: black;
-}
-.circle {
-    top: 140px;
-    left: 590px;
-}
-
-.addCategory {
+.formDiv {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 24px;
-    background: #fff;
-    background-blend-mode: overlay;
-    border: 2px solid rgba(255, 255, 255, 0.027);
-}
-.addCategory button {
-    justify-content: flex-end;
-    width: 50px;
-}
-.backdrop {
-    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    top: 0;
-    position: fixed;
-    background: rgba(0,0,0,0.5);
-    width: 100%;
+    height: 100vh;
+    gap: 24px;
+    background: #f3f3f3;
+}
+
+.formContent {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+}
+.line {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100%;
 }
+.linepart {
+    height: 17.4%;
+    display: flex;
+    flex-direction: row;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.11);
+}
 
-.form {
+.loginContent {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    height: 41.5vh;
+    width: 15vw;
+    padding: 24px;
 }
-
-.labelContainer {
-    display: flex;
-    gap: 24px;
-}
-
-.labelContainer label {
+.login {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    align-items: center;
+    gap: 12px;
 }
-.buttonContainer button {
+
+.login button {
     width: 100%;
 }
-
-input, select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border-radius: 0px;
-  background-color: white;
-  border-bottom: 2px solid #A5A8AB;
-  color: black;
-}
-
-button {
+.name {
+    width: 100%;
     display: flex;
-    justify-content: start;
-    align-items: center;
-    background: #E08864;
-    padding: 28px;
-    border-radius: 0px;
+    gap: 15px;
 }
 
-button p {
-    color: white;
+.firstName, .lastName {
+    width: 50%;
 }
-
-
-p, label {
-    color: black;
-}
-
-input::placeholder {
-    color: #A5A8AB;
-}
-
 
 
 </style>

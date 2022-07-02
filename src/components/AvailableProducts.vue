@@ -56,7 +56,7 @@
                     <button @click="product.hide = !product.hide">Edit</button>
                 </div>
                 <div class="productItemContent_delete">
-                    <button>Delete</button>
+                    <button @click="deleteProduct(product.id)">Delete</button>
                 </div>
             </div>
             <div class="hide" v-show="product.hide">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="button">
-                        <button type="submit" class="update">Update</button>
+                        <button class="update">Update</button>
                         <button type="reset" class="cancel" @click="reloadPage">Cancel</button>
                     </div>
                 </div>
@@ -110,8 +110,14 @@ const props = defineProps ({
 // let status = ref();
 const { allProducts } = toRefs(props)
 // const { cancerMaagd } = toRefs(props)
-const emit = defineEmits(['openAddProduct', 'updateProduct'])
+const emit = defineEmits(['openAddProduct', 'updateProduct', 'deleteProduct'])
 let input = ref('');
+
+function deleteProduct(id) {
+    if (confirm('Are you sure you want to delete this product?')) {
+        emit('deleteProduct', id)
+    }
+}
 function open() {
     emit('openAddProduct', true)
 }
@@ -195,8 +201,12 @@ export default {
             .catch((error) => console.log(error.response.data))
         },
         updateProduct(product) {
-            this.$emit('updateProduct', product)
-            console.log(product)
+            if (confirm("Are you sure you want to update this product?")) {
+                this.$emit('updateProduct', product)
+                console.log(product)
+            } else {
+                window.location.reload()
+            }
         }
 
     },

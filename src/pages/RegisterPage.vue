@@ -1,113 +1,110 @@
 <template>
 <div class="containerLoginRegister">
-    <div class="circle"></div>
-    <div class="registerForm">
-    <div class="leftSignIn">
+    <div class="formDiv">
         <form v-on:submit.prevent="submitForm">
-            <h2>Register now</h2>
-            <div class="registerName">
-                <div class="registerFirst">
-                   <label style="margin-bottom: -12px;">First Name
-                    <input v-model="form.firstName" type="text" name="firstName" placeholder="Enter your first name"/></label> 
+            <div class="formContent">
+                <h2>Register here</h2>
+                <div class="name">
+                    <div class="firstName">
+                        <label>First Name
+                        <input v-model="form.firstName" placeholder="Enter your first name" type="text" required/></label>
+                    </div>
+                    <div class="lastName">
+                        <label>Last Name
+                        <input v-model="form.lastName" placeholder="Enter your last name" type="text" required/></label>   
+                    </div>
                 </div>
-                <div class="registerLast">
-                   <label style="margin-bottom: -12px;">Last Name
-                    <input v-model="form.lastName" type="text" name="lastName" placeholder="Enter your last name"/></label>
+                <div class="email">
+                    <label>Email
+                    <input v-model="form.email" placeholder="Enter your email" type="email" required/></label>   
+                </div>
+                <div class="password">
+                    <label>Password
+                    <input v-model="form.password" placeholder="Enter your password" type="password" required/></label>   
+                </div>
+                <button>Register now</button>        
+            </div>
+        </form>
+        <div class="line">
+            <div class="linepart"></div>
+            <p>or</p>
+            <div class="linepart"></div>
+        </div>
+        <div>
+            <div class="loginContent">
+                <div class="login">
+                    <h3>Already have an account?</h3>
+                    <button @click="$router.push('login')">Login here</button>
                 </div>
             </div>
-            <label style="margin-bottom: -12px;">Email
-            <input v-model="form.email" type="email" name="email" placeholder="Enter your email here"/></label>
-            <label style="margin-bottom: -12px;">Password
-            <input v-model="form.password" type="password" name="password" placeholder="Enter your password here"/></label>
-                <div class="buttons">
-                <button class="login"><p>Register now</p></button>
-                <div class="register"><a href="/login">Already have an account</a></div>
-                </div>
-        </form>
-    </div>
+        </div>
     </div>
 </div>
 </template>
 
 
 <style scoped>
-.circle { 
-    top: 15%;
-    left: 28.5%;
-}
-.containerLoginRegister {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #19173D;
-}
-
-.leftSignIn {
-    padding: 24px;
-    padding-bottom: 38px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25vw;
-    background-color: #262450;
-    border-radius: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.027);
-    background-blend-mode: overlay;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 18px;
-}
-
-label {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.registerName {
+.formDiv {
     display: flex;
     flex-direction: row;
-    gap: 24px;
-}
-
-.registerFirst, .registerLast {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.login {
-    width: 7.5%;
-    position: absolute;
-    box-shadow: 0px 3px 20px rgba(0, 83, 100, 0.11), 0px 5px 40px #00d9ff49;
-}
-
-.buttons {
-    padding-top: 6px;
-}
-.register {
-    display: flex;
-    justify-content: end;
-    padding-left: 50%;
-    padding-right: 12px;
+    justify-content: center;
     align-items: center;
-    width: 30%;
-    height: 30px;
-    background: #19173D;
-    border: 0px solid rgba(255, 255, 255, 0.205);
-    border-radius: 12px;
+    height: 100vh;
+    gap: 24px;
+    background: #f3f3f3;
 }
 
-.register p {
-    font-size: 12px;
-    color: #7B78AA;
+.formContent {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 41.5vh;
+    justify-content: center;
+}
+.line {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.linepart {
+    height: 17.4%;
+    display: flex;
+    flex-direction: row;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.11);
+}
+
+.loginContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 41.5vh;
+    width: 15vw;
+    padding: 24px;
+}
+.login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.login button {
+    width: 100%;
+}
+.name {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+}
+
+.firstName, .lastName {
+    width: 50%;
 }
 </style>
 

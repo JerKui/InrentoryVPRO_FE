@@ -1,91 +1,101 @@
 <template>
 <div class="containerLoginRegister">
-    <div class="loginform">
-        <div class="circle"></div>
-        <div class="leftSignIn">
-            <form v-on:submit.prevent="submitForm">
-                <h2>Log in</h2>
-                <label style="padding-bottom: -24px;">Email
-                <input v-model="form.email" type="email" name="email" placeholder="Enter your email"/></label>
-                <div v-if="emailError" class="error"> {{ emailError }}</div>
-                <label style="padding-bottom: -12px;">Password
-                <input v-model="form.password" type="password" name="password" placeholder="Enter your password"/></label>
-                <div v-if="passwordError"> {{ passwordError }}</div>
-                <div class="buttons">
-                <button class="login"><p>Log in</p></button>
-                <div class="register"><a href="/register">Register here</a></div>
+    <div class="formDiv">
+        <form v-on:submit.prevent="submitForm">
+            <div class="formContent">
+                <h2>Login here</h2>
+                <div class="email">
+                    <label>Email
+                    <input v-model="form.email" placeholder="Enter your email" type="email" required/></label>   
                 </div>
-            </form>
-        </div>       
+                <div class="password">
+                    <label>Password
+                    <input v-model="form.password" placeholder="Enter your password" type="password" required/></label>   
+                </div>
+                <button>Login here</button>        
+            </div>
+        </form>
+        <div class="line">
+            <div class="linepart"></div>
+            <p>or</p>
+            <div class="linepart"></div>
+        </div>
+        <div>
+            <div class="loginContent">
+                <div class="login">
+                    <h3>Not have an account yet?
+                    </h3>
+                    <button @click="$router.push('register')">Register here</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </template>
 
 <style scoped>
-.containerLoginRegister {
-    width: 100vw;
+.formDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #19173D;
+    gap: 24px;
+    background: #f3f3f3;
 }
-.leftSignIn {
+
+.formContent {
     padding: 24px;
-    padding-bottom: 38px;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    height: 41.5vh;
+    width: 20vw;
+}
+.line {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 20vw;
-    background-color: #262450;
-    border-radius: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.027);
-    background-blend-mode: overlay;
+    height: 100%;
+}
+.linepart {
+    height: 13%;
+    display: flex;
+    flex-direction: row;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.11);
 }
 
-.circle {
-    top: 52%;
-    left: 53.5%;
-}
-
-form {
+.loginContent {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    gap: 18px;
-}
-
-label {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.login {
-    width: 7.5%;
-    position: absolute;
-    box-shadow: 0px 3px 20px rgba(0, 83, 100, 0.11), 0px 5px 40px #00d9ff49;
-}
-
-.buttons {
-    padding-top: 6px;
-}
-.register {
-    display: flex;
-    justify-content: end;
-    padding-left: 40%;
-    padding-right: 12px;
     align-items: center;
-    width: 30%;
-    height: 30px;
-    background: #19173D;
-    border: 0px solid rgba(255, 255, 255, 0.205);
-    border-radius: 12px;
+    justify-content: center;
+    height: 41.5vh;
+    width: 15vw;
+    padding: 24px;
+}
+.login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
 }
 
-.register p {
-    font-size: 12px;
-    color: #7B78AA;
+.login button {
+    width: 100%;
+}
+.name {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+}
+
+.firstName, .lastName {
+    width: 50%;
 }
 </style>
 

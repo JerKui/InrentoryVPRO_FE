@@ -13,9 +13,6 @@
                 </div>
                 <div class="companyinformation">
                     <div class="companyinfo">
-                        <div class="icon">
-                            <font-awesome-icon class="address" icon="fa-solid fa-map" />  
-                        </div>
                         <div class="content">
                             <h3>Address</h3>
                              <p>{{ company.address }}</p>  
@@ -23,9 +20,7 @@
                     </div>
                     <hr>
                     <div class="companyinfo">
-                        <div class="icon">
-                            <font-awesome-icon class="postal" icon="fa-solid fa-map-location-dot" />
-                        </div>
+
                         <div class="content">
                             <h3>Postalcode</h3>
                              <p>{{ company.postalcode }}</p>  
@@ -33,9 +28,6 @@
                     </div>
                     <hr>
                     <div class="companyinfo">
-                        <div class="icon">
-                            <font-awesome-icon class="phone" icon="fa-solid fa-phone" />  
-                        </div>
                         <div class="content">
                             <h3>Phonenumber</h3>
                              <p>+ {{ company.phone }}</p>  
@@ -181,18 +173,6 @@ h2 {
     display: flex;
     flex-direction: column;
 
-}
-
-.address {
-    color: #94baf7;
-}
-
-.postal {
-    color: #a4f19a;
-}
-
-.phone {
-    color: #f19a9a;
 }
 .companycontent{
     display: flex;

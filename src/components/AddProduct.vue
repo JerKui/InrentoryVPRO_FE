@@ -4,22 +4,31 @@
     <div class="backdrop">
         <div class="addCategory">
             <div class="containerForm">
-                <form class="form" form v-on:submit.prevent="postProduct">
-                    <h2>+ Add product</h2>
-                    <div class="labelContainer">
-                        <label><p>Add name</p><input type="text" v-model="data.name" placeholder="Enter a name" required/></label>
-                        <label for="genre">Add category
-                        <select v-model="data.descriptionProductline" required>
-                        <option v-for="category in infoProduct" :value="category.name" :key="category.id"> {{category.name}} </option>
-                        </select>
-                        </label>
+                <form ref="addproduct" class="form" form v-on:submit.prevent="postProduct">
+                <div class="formContent">
+                    <div class="header">
+                        <h2>Add product</h2>
+                        <h2 @click="close">x</h2>
                     </div>
-                    <div class="labelContainer">
-                        <label><p>Add stock</p><input type="number" v-model="data.stock" placeholder="Enter a stock" required/></label>
+                    <div class="email">
+                        <label>Product name
+                        <input v-model="data.name" placeholder="Enter the name of the product" type="text" required/></label>   
                     </div>
-                    <div class="buttonContainer">
-                        <button id="buttonSignIn"><p>Add product</p></button>  
+                    <div class="name">
+                        <div class="firstName">
+                            <label> Category
+                            <select v-model="data.descriptionProductline" required>
+                            <option v-for="category in infoProduct" :value="category.name" :key="category.id"> {{category.name}} </option>
+                            </select>
+                            </label>   
+                        </div>
+                        <div class="lastName">
+                            <label>Stock
+                            <input v-model="data.stock" type="number" required/></label>   
+                        </div>
                     </div>
+                    <button>Add product</button>        
+                </div>
                 </form>
             </div>
         </div>
@@ -61,8 +70,12 @@ export default {
             this.$emit('poopy')
         },
         postProduct() {
-            console.log(this.data)
-            this.$emit('updateProduct', this.data)
+            if (confirm('Are you sure you want to add this product?')) {
+                this.$emit('updateProduct', this.data)
+                this.$refs.addproduct.reset();
+                this.close();
+            }
+            this.$refs.addproduct.reset();
         },
         getProductLine() {
             axios.get('/productline', {
@@ -84,31 +97,6 @@ export default {
 </script>
 
 <style scoped>
-
-h2 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    color: black;
-}
-.circle {
-    top: 140px;
-    left: 590px;
-}
-
-.addCategory {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 24px;
-    background: #fff;
-    background-blend-mode: overlay;
-    border: 2px solid rgba(255, 255, 255, 0.027);
-}
-.addCategory button {
-    justify-content: flex-end;
-    width: 50px;
-}
 .backdrop {
     display: flex;
     justify-content: center;
@@ -119,57 +107,84 @@ h2 {
     width: 100%;
     height: 100%;
 }
-
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    background: #f3f3f3;
 }
 
-.labelContainer {
+.formDiv {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     gap: 24px;
+    background: #f3f3f3;
 }
 
-.labelContainer label {
+.formContent {
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
+    justify-content: center;
 }
-.buttonContainer button {
+.line {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.linepart {
+    height: 17.4%;
+    display: flex;
+    flex-direction: row;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.11);
+}
+
+.loginContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 41.5vh;
+    width: 15vw;
+    padding: 24px;
+}
+.login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.login button {
     width: 100%;
 }
-
-input, select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border-radius: 0px;
-  background-color: white;
-  border-bottom: 2px solid #A5A8AB;
-  color: black;
-}
-
-button {
+.name {
+    width: 100%;
     display: flex;
-    justify-content: start;
-    align-items: center;
-    background: #E08864;
-    padding: 28px;
-    border-radius: 0px;
+    gap: 15px;
 }
 
-button p {
-    color: white;
+.firstName {
+    width: 80%;
+}
+
+.lastName {
+    width: 20%;
 }
 
 
-p, label {
-    color: black;
-}
-
-input::placeholder {
-    color: #A5A8AB;
-}
 </style>

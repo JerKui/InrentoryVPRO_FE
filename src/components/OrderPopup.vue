@@ -5,33 +5,35 @@
         <div class="orderPopup">
             <div class="ui form">
             <div class="fields">
-                <form form v-on:submit.prevent="postOrder"  @close="close">
-                    <h2>+ Add order</h2>
-                    <div class="field">
-                        <label>Name
-                        <input v-model="formOrder.name" type="text" placeholder="Name" required>
-                        </label>
+                <form ref="addorder" form v-on:submit.prevent="postOrder"  @close="close">
+                <div class="formContent">
+                    <div class="header">
+                        <h2>Add order</h2>
+                        <h2 @click="close">x</h2>
                     </div>
-                    <div class="field">
-                        <label>Return date
-                        <input v-model="formOrder.returnDate" type="date">
-                        </label>
+                    <div class="email">
+                        <label>Order name
+                        <input v-model="formOrder.name" placeholder="Enter the name of the order" type="text" required/></label>   
                     </div>
-                    <div class="field">
-                        <label>Comments
-                        <input v-model="formOrder.comments" type="textarea" placeholder="Fill in comment">
-                        </label>
+                    <div class="password">
+                        <label>Comment
+                        <input v-model="formOrder.comments" placeholder="Add a comment to the order" type="text" required/></label>   
                     </div>
-                    <div class="field">
-                        <label for="genre">Add company
-                        <select v-model="formOrder.company" required>
-                        <option v-for="company in companies" :value="company.name" :key="company.id"> {{company.name}} </option>
-                        </select>
-                        </label>
+                    <div class="name">
+                        <div class="firstName">
+                            <label>Date
+                            <input v-model="formOrder.returnDate" type="date" required/></label>
+                        </div>
+                        <div class="lastName">
+                            <label for="genre">Company
+                            <select v-model="formOrder.company" required>
+                            <option v-for="company in companies" :value="company.name" :key="company.id"> {{company.name}} </option>
+                            </select>
+                            </label>
+                        </div>
                     </div>
-                    <div class="button">
-                        <button>Submit</button>
-                    </div>
+                    <button>Update company</button>        
+                </div>
                 </form>
             </div>
             </div>
@@ -75,7 +77,11 @@ export default {
     },
     methods: {
         postOrder() {
-            this.$emit('createOrder', this.formOrder)
+            if (confirm('Are you sure you want to add this order?')) {
+                this.$emit('createOrder', this.formOrder)
+                this.$refs.addorder.reset();
+                this.close();
+            }
         },
         getCompanies() {
             axios.get('/company', {
@@ -108,101 +114,79 @@ export default {
     width: 100%;
     height: 100%;
 }
-
-.orderPopup {
+.header {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: white;
-    padding: 24px;
-}
-
-
-h2 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    color: black;
-}
-.circle {
-    top: 140px;
-    left: 590px;
-}
-
-.addCategory {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 24px;
-    background: #fff;
-    background-blend-mode: overlay;
-    border: 2px solid rgba(255, 255, 255, 0.027);
-}
-.addCategory button {
-    justify-content: flex-end;
-    width: 50px;
-}
-.backdrop {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    top: 0;
-    position: fixed;
-    background: rgba(0,0,0,0.5);
-    width: 100%;
-    height: 100%;
+    justify-content: space-between;
 }
-
 .form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    background: #f3f3f3;
 }
 
-.labelContainer {
+.formDiv {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     gap: 24px;
+    background: #f3f3f3;
 }
 
-.labelContainer label {
+.formContent {
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
+    justify-content: center;
 }
-.buttonContainer button {
+.line {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.linepart {
+    height: 17.4%;
+    display: flex;
+    flex-direction: row;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.11);
+}
+
+.loginContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 41.5vh;
+    width: 15vw;
+    padding: 24px;
+}
+.login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.login button {
     width: 100%;
 }
-
-input, select {
-  width: 100%;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border-radius: 0px;
-  background-color: white;
-  border-bottom: 1px solid #a5a8ab5e;
-  color: black;
-}
-
-button {
+.name {
+    width: 100%;
     display: flex;
-    justify-content: start;
-    align-items: center;
-    background: #E08864;
-    padding: 28px;
-    border-radius: 0px;
+    gap: 15px;
 }
 
-button p {
-    color: white;
-}
-
-
-p, label {
-    color: black;
-}
-
-input::placeholder {
-    color: #A5A8AB;
+.firstName, .lastName {
+    width: 50%;
 }
 
 </style>
