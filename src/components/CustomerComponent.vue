@@ -64,6 +64,7 @@
                         <select v-model="data.product">
                             <option v-for="(product) in filterAllProducts()" :key="product.name">{{ product.name }}</option>
                         </select>
+                        
                     <button class="closeButton" @click="addProductToOrder(order.name)">Add product</button>
                     <div class="buttons">
                        <button class="deleteButton" @click="deleteAnOrder(order.name)">Delete order</button>
