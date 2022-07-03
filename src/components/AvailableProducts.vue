@@ -1,4 +1,5 @@
 <template>
+
 <div class="flex--1">
     <div class="productsHeader">
         <h1>Inventory</h1>
@@ -222,6 +223,7 @@ input, select {
   background-color: white;
   border-bottom: 1px solid #a5a8ab5e;
   color: black;
+  font-weight: 4004;
 }
 
 button p {
@@ -230,6 +232,7 @@ button p {
 
 
 p, label {
+    font-weight: 400;
     color: black;
 }
 
@@ -243,10 +246,10 @@ button {
     justify-content: center;
     align-items: center;
     background: white;
-    border: 2px solid #F0F0F0;
+    border:1px solid #c5c5c541;
     padding: 28px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     color: black;
     border-radius: 0px;
     cursor: pointer;
@@ -278,7 +281,7 @@ select{
 
 h1 {
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 52px;
 
 }
@@ -297,13 +300,13 @@ p {
 .filter {
     display: flex;
     width: 100%;
-    height: 55px;
+    height: 58px;
     gap: 12px;
 }
 
 .filter button {
     background: rgba(0, 0, 0, 0.027);
-    border: #c5c5c541;
+    border:1px solid #c5c5c541;
     color: rgba(0, 0, 0, 0.582);
     font-weight: 400;
 }
@@ -433,10 +436,10 @@ p {
     justify-content: center;
     align-items: center;
     background: white;
-    border: 2px solid #F0F0F0;
+    border: 1px solid #F0F0F0;
     padding: 15px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .productItemContent_edit {
@@ -457,6 +460,7 @@ p {
 
 .hideContent {
     border: 1px solid #F0F0F0;
+    border-top: 0px;
     padding: 36px;
     padding-top: 18px;
     padding-bottom: 18px;
@@ -492,18 +496,25 @@ p {
 }
 .button {
     display: flex;
+    gap: 12px;
 }
 .button .update {
-    width: 90%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.377);
-    color: white;
-    border: 0px;
+    background: #9E9E9E;
+    border: 1px solid #F0F0F0;
     padding: 28px;
-    border: 2px solid rgba(0, 0, 0, 0.034);
+    width: 90%;
+    font-size: 14px;
+    font-weight: 300;
+    color: white;
     border-radius: 0px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.089);
+    border:1px solid #c5c5c541;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
 }
 .productItemContent {
     transition: all 0.3s ease-in-out;

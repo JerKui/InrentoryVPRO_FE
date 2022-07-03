@@ -31,10 +31,8 @@
                         <div>{{ order.company.name }}</div>
                     </div>           
                     <div class="orderHeader_item">
-                        <h3>Order status</h3>
-                        <div class="statuscircle" :class="
-                        [order.status === 0 ? 'statuscircle_pending' : 'statuscircle_done']">
-                        </div>
+                        <h3>Order name</h3>
+                        <div> {{order.name}} </div>
                     </div>              
                 </div>
                 <div class="orderHeaderRight">
@@ -48,7 +46,6 @@
             <Transition name="nested" :duration="{ enter: 800, leave: 300 }">
             <div class="orderContent outer" v-show="!order.hide">
                 <div class="orderContentLeft inner">
-                    <div>{{ order.name }}</div>
                     <div class="orderContentLeft_items" v-for="(product) in order.products" :key="product">
                         <div class="orderContentLeft_item">
                             <div class="itemcontent">
@@ -85,8 +82,16 @@
             </div>
             </Transition>
             <div class="orderFooter">
-                <h3>Estimated return date:</h3>
-                <div>{{ convertDate(order.returnDate) }}</div>
+                <div class="leftfooter">
+                    <h3>Estimated return date:</h3>
+                    <div>{{ convertDate(order.returnDate) }}</div>
+                </div>
+                <div class="rightFooter">
+                    <h3>Order status</h3>
+                    <div class="statuscircle" :class="
+                    [order.status === 0 ? 'statuscircle_pending' : 'statuscircle_done']">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -309,7 +314,7 @@ button {
     border: 1px solid #F0F0F0;
     padding: 28px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     color: black;
     border-radius: 0px;
     cursor: pointer;
@@ -340,13 +345,13 @@ select{
 
 h1 {
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 52px;
 
 }
 
 h3 {
-    font-weight: 400;
+    font-weight: 300;
     color: #A5A8AB;
 }
 
@@ -367,7 +372,7 @@ p {
 .filter button {
     width: 20%;
     background: rgba(0, 0, 0, 0.027);
-    border: #c5c5c541;
+    border:1px solid #c5c5c541;
     color: rgba(0, 0, 0, 0.582);
     font-weight: 400;
 }
@@ -440,6 +445,11 @@ p {
     background: #dddff55e;
 }
 
+.rightFooter, .leftfooter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 .orderHeaderLeft  {
     display: flex;
     gap: 120px;
@@ -488,6 +498,7 @@ p {
     width: 30%;
     display: flex;
     flex-direction: column;
+    gap: 12px;
 }
 
 .orderContentRight .closeButton {
@@ -499,10 +510,14 @@ p {
     padding: 28px;
 
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 300;
     color: white;
     border-radius: 0px;
     cursor: pointer;
+    background: rgba(0, 0, 0, 0.089);
+    border:1px solid #c5c5c541;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
 }
 
 .orderContentRight .deleteButton {
@@ -515,7 +530,7 @@ p {
     border-bottom: 1px solid #F0F0F0;
     padding: 28px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     color: black;
     border-radius: 0px;
     cursor: pointer;
@@ -526,7 +541,9 @@ p {
     gap: 24px;
     flex-direction: row;
     border: 1px solid #F0F0F0;
+    border-top: 0px;
     background: #fafafa0e;
+    justify-content: space-between;
 }
 
 .itemcontent {
@@ -595,6 +612,7 @@ p {
 .buttons{
     width: 100%;
     display: flex;
+    gap: 12px;
 }
 
 .deleteButton{
