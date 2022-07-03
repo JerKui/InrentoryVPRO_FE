@@ -2,7 +2,7 @@
     <div class="flex--1">
         <div class="header">
             <h1>Orders</h1>
-            <input type="text" v-model="input" placeholder="Search">
+            <!-- <input type="text" v-model="input" placeholder="Search"> -->
             <button @click="open">+ Add order</button>   
         </div>
         <Transition name="slide-fade">
@@ -14,7 +14,7 @@
             <button @click="sortID(value = !value)">ID</button>  
         </div>
         </Transition>
-        <div class="order" v-for="(order) in searchFilterInput()" :key="order">
+        <div class="order" v-for="(order) in allOrders" :key="order">
             <div class="orderHeader" @click="order.hide = !order.hide" :class="
                         [order.status === 0 ? 'orderHeaderNeutral' : 'orderHeaderDone']">
                 <div class="orderHeaderLeft">
@@ -99,7 +99,7 @@
 
 <script setup>
 
-import { defineEmits, defineProps, toRefs, ref} from 'vue'
+import { defineEmits, defineProps, toRefs} from 'vue'
 // import axios from '@/axios-common'
 
 // let products = []
@@ -109,7 +109,7 @@ const props = defineProps ({
     allProducts: Array,
 })
 const { allOrders } = toRefs(props)
-let input = ref('');
+// let input = ref('');
 const { allProducts } = toRefs(props)
 
 // Hiermee geef ik een signaal aan de template om het modal te openen doormiddel van de functie openAddCustomers
@@ -135,13 +135,13 @@ function convertDate(date) {
     }
 }
 
-function searchFilterInput() {
-    if (this.input !== null ) {
-        return allOrders.value.filter(order => {
-        return order.company.name.toLowerCase().includes(this.input.toLowerCase())
-        })
-    }
-}
+// function searchFilterInput() {
+//     if (this.input !== null ) {
+//         return allOrders.value.filter(order => {
+//         return order.company.name.toLowerCase().includes(this.input.toLowerCase())
+//         })
+//     }
+// }
 
 function filterAllProducts() {
     // if stock is 0 product is not available remove from select
