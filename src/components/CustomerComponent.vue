@@ -6,7 +6,7 @@
             <button @click="open">+ Add order</button>   
         </div>
         <Transition name="slide-fade">
-        <div class="filter" v-if="this.show">
+        <div class="filter">
             <button @click="sortDate(value = !value)">Date</button>
             <button @click="sortProduct(value = !value)">Product</button>  
             <button @click="sortName(value = !value)">Company</button>  
