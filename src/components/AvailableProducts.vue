@@ -5,29 +5,12 @@
         <input type="text" v-model="input" placeholder="Search">
         <button @click="open">+ Add product</button>
     </div>
-    <div class="productHeader">
-        <div class="productHeaderContent">
-            <div class="productHeaderContent_id" @click="sortFilterId">
-                <h3>#</h3>
-            </div>
-            <div class="productHeaderContent_category">
-                <h3 @click="sortFilterCategory">Category</h3>
-            </div>
-            <div class="productHeaderContent_name">
-                <h3 @click="sortFilterName">Name</h3>
-            </div>
-            <div class="productHeaderContent_stock">
-                <h3>Stock</h3>
-            </div>
-            <div class="productHeaderContent_edit">
-                <h3>Edit</h3>
-            </div>
-            <div class="productHeaderContent_delete">
-                <h3>Delete</h3>
-            </div>
+        <div class="filter" v-if="true">
+            <button class="idb" @click="sortFilterId(value = !value)">Id</button>
+            <button class="categoryb" @click="sortFilterCategory(value = !value)">Category</button>  
+            <button class="productb" @click="sortFilterName(value = !value)">Product</button>  
+            <button class="stockb" @click="sortStatus(value = !value)">Stock</button>  
         </div>
-        <hr>
-    </div>
     <div class="productItem" v-for="(product) in searchFilterInput(input)" :key="product.id">
         <div class="productHeader">
             <div class="productItemContent">
@@ -59,8 +42,9 @@
                     <button @click="deleteProduct(product.id)">Delete</button>
                 </div>
             </div>
-            <div class="hide" v-show="product.hide">
-            <div class="hideContent">
+            <Transition name="nested" :duration="{ enter: 800, leave: 300 }">
+            <div class="hide outer" v-show="product.hide">
+            <div class="hideContent inner">
                 <form form v-on:submit.prevent="updateProduct(product)">
                 <div class="formspace">
                     <div class="hideContent_section1">
@@ -92,8 +76,8 @@
                 </form>
             </div>
             </div>
+            </Transition>
         </div>
-        <hr>
     </div>
     
 </div>
@@ -219,6 +203,16 @@ export default {
 </script>
 
 <style scoped>
+.nested-enter-active .inner,
+.nested-leave-active .inner {
+  transition: all 0.3s ease-in-out;
+}
+
+.nested-enter-from .inner,
+.nested-leave-to .inner {
+  transform: translateX(30px);
+  opacity: 0;
+}
 
 input, select {
   width: 100%;
@@ -263,6 +257,7 @@ button {
     gap: 12px;
     overflow-x: hidden;
     padding: 48px;
+    transition: all 0.3s ease-in-out;
 }
 
 select{
@@ -299,13 +294,41 @@ p {
     color: black;
 }
 
+.filter {
+    display: flex;
+    width: 100%;
+    height: 55px;
+    gap: 12px;
+}
+
+.filter button {
+    background: rgba(0, 0, 0, 0.027);
+    border: #c5c5c541;
+    color: rgba(0, 0, 0, 0.582);
+    font-weight: 400;
+}
+
+.filter .idb {
+    width: 5%;
+}
+
+.filter .categoryb {
+    width: 10%;
+}
+
+.filter .productb {
+    width: 60%;
+}
+
+.filter .stockb {
+    width: 25%;
+}
 .productsHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 60px;
 }
-
 .productHeaderContent {
     display: flex;
     padding: 10px;
@@ -343,7 +366,8 @@ p {
 }
 .productItemContent {
     background-color: #FAFAFA;
-    padding: 10px;
+    padding: 16px;
+    border: 1px solid #a5a8ab21;
 }
 .productItemContent_id, .productItemContent_category, .productItemContent_name, .productItemContent_stock, .productItemContent_edit, .productItemContent_delete {
     display: flex;
