@@ -443,7 +443,7 @@ p {
 }
 
 .productItemContent_edit {
-    width: 7.5%
+    width: 6.3%
 }
 
 .productItemContent_delete {
