@@ -90,8 +90,7 @@ export default {
                 }
             })
             .then(response => {
-                this.companies = response.data;
-                console.log(this.companies)
+                this.companies = response.data
             })
             .catch((error) => console.log(error.response.data))
         },

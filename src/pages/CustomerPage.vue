@@ -6,6 +6,7 @@
     @openModal="(options) => openAddCustomers(options)"
     @deleteOrder="(options) => deleteOrders(options)"
     @updateStatus="(options) => updateStatusOrder(options)"
+    @sendChangelog="(options) => postChangelog(options)"
     :allOrders="allOrders"
     :allProducts="allProducts"
     ></customer-component>
@@ -47,7 +48,6 @@ onMounted(() => {
 
 function createOrders(order) {
     // add order to array
-    console.log(order)
     axios.post('/orders', order, {
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
@@ -74,7 +74,8 @@ function deleteOrders(order) {
 }
 
 function addProductToOrder(order) {
-    axios.put('/orders', order, {   
+    if (order.stock !== 0) {
+            axios.put('/orders', order, {   
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
         }
@@ -83,8 +84,10 @@ function addProductToOrder(order) {
         const allOrdArrayObj = allOrders.value.find(orderObject => orderObject.id === response.data.id)
         const allOrdArrayIndex = allOrders.value.indexOf(allOrdArrayObj)
         allOrders.value[allOrdArrayIndex] = response.data
+        
     })
     .catch((error) => console.log(error.response.data))
+    }
 }
 
 function getAllProducts() {
@@ -106,13 +109,14 @@ function getAllOrders() {
         }
     })
     .then(response => (
-        allOrders.value = response.data
+        allOrders.value = response.data,
+        console.log(allOrders.value)
     ))
     .catch((error) => console.log(error.response.data))
 }
 
 function deleteProductToOrder(product) {
-    console.log(product)
+
     axios.put('/orders/delete', product, {
         headers: {
             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
@@ -124,6 +128,22 @@ function deleteProductToOrder(product) {
         allOrders.value[allOrdArrayIndex] = response.data
     })
     .catch((error) => console.log(error.response.data))
+}
+
+function postChangelog(options) {
+    axios.post('/changelog', options, {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then((response) => {
+        const allOrdArrayObj = allOrders.value.find(orderObject => orderObject.id === response.data.id)
+        const allOrdArrayIndex = allOrders.value.indexOf(allOrdArrayObj)
+        allOrders.value[allOrdArrayIndex] = response.data
+    })
+    .catch(error => {
+        console.log(error)
+    })
 }
 
 function updateStatusOrder(options) {

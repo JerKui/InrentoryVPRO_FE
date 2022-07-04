@@ -2,7 +2,7 @@
     <div class="flex--1">
         <div class="header">
             <h1>Orders</h1>
-            <!-- <input type="text" v-model="input" placeholder="Search"> -->
+            <input type="text" v-model="input" placeholder="Search here with a order name">
             <button @click="open">+ Add order</button>   
         </div>
         <Transition name="slide-fade">
@@ -14,9 +14,10 @@
             <button @click="sortID(value = !value)">ID</button>  
         </div>
         </Transition>
-        <div class="order" v-for="(order) in allOrders" :key="order">
+        <div class="order" v-for="(order) in searchFilterInput(allOrders)" :key="order">
             <div class="orderHeader" @click="order.hide = !order.hide" :class="
-                        [order.status === 0 ? 'orderHeaderNeutral' : 'orderHeaderDone']">
+                        [order.status === 0 ? 'orderHeaderNeutral' : 'orderHeaderDone',
+                        convertStringToDate(order.returnDate) <= new Date() && order.status === 0 ? 'orderHeaderToLate' : '']">
                 <div class="orderHeaderLeft">
                     <div class="orderHeader_item">
                         <h3>Order placed</h3>
@@ -33,7 +34,11 @@
                     <div class="orderHeader_item">
                         <h3>Order name</h3>
                         <div> {{order.name}} </div>
-                    </div>              
+                    </div>    
+                    <div class="orderHeader_item">
+                        <h3>Order comment: </h3>
+                        <div>{{ order.comments }}</div>
+                    </div>           
                 </div>
                 <div class="orderHeaderRight">
                     <div class="orderHeader_itemRight">
@@ -49,7 +54,7 @@
                     <div class="orderContentLeft_items" v-for="(product) in order.products" :key="product">
                         <div class="orderContentLeft_item">
                             <div class="itemcontent">
-                                <div class="categorypiece">
+                                <div class="categorypiece" :disabled="authStore.id">
                                     <div class="category" :class="
                                         [product.productline.name === 'Camera' ? 'categoryblue' : 'category', 
                                         product.productline.name === 'Microphone' ? 'categorymicrophone' : 'category',
@@ -69,27 +74,51 @@
                     </div>
                 </div>
                 <div class="orderContentRight">
-                        <select v-model="data.product">
-                            <option v-for="(product) in filterAllProducts()" :key="product.name">{{ product.name }}</option>
+                    <div class="selection">
+                        <select v-model="data.product" @change="getProduct(data.product)" class="selectionpart">
+                            <option v-for="(product) in filterAllProducts()" :key="product">{{ product.name }}</option>
                         </select>
-                        
-                    <button class="closeButton" @click="addProductToOrder(order.name)">Add product</button>
-                    <div class="buttons">
-                       <button class="deleteButton" @click="deleteAnOrder(order.name)">Delete order</button>
-                       <button class="completedButton" @click="updateAnOrder(order.id)">Complete order</button> 
+                        <div class="numberstock">
+                            <h2>{{ getProductSelectedObject.stock }}</h2>
+                        </div>
                     </div>
+                        
+                    <button class="closeButton" @click="addProductToOrder(order.name)" :disabled=" getProductSelectedObject.stock === 0">Add product</button>
+                    <div class="buttons">
+                       <button class="deleteButton" @click="deleteAnOrder(order.name)">Delete</button>
+                       <button class="completedButton" @click="updateAnOrder(order.id)">Complete</button> 
+                       <button class="completedButton" @click="order.change = !order.change">Changelog</button> 
+                    </div>
+                    <Transition name="nested" :duration="{ enter: 800, leave: 300 } ">
+                    <div class="changelog outer" v-show="!order.change">
+                        <div class="changelogb inner">
+                            <div class="changelogitems">
+                                <div v-for="changelog in order.changelogs" :key="changelog.id">
+                                    <h3> {{changelog.user.firstName}}:  {{ changelog.message }}</h3>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="send">
+                                <input type="text" v-model="data.message">
+                                <button @click="sendChangelog(order.id)">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                    </Transition>
                 </div>
             </div>
             </Transition>
             <div class="orderFooter">
                 <div class="leftfooter">
                     <h3>Estimated return date:</h3>
-                    <div>{{ convertDate(order.returnDate) }}</div>
+                    <div :class="[convertStringToDate(order.returnDate) <= new Date() && order.status === 0 ? 'toolate' : '']">{{ convertDate(order.returnDate) }}</div>
                 </div>
                 <div class="rightFooter">
                     <h3>Order status</h3>
+                    
                     <div class="statuscircle" :class="
-                    [order.status === 0 ? 'statuscircle_pending' : 'statuscircle_done']">
+                    [order.status === 0 ? 'statuscircle_pending' : 'statuscircle_done',
+                    ( convertStringToDate(order.returnDate) <= new Date() && status === 0) ? 'statuscircle_late' : '']">
                     </div>
                 </div>
             </div>
@@ -99,18 +128,26 @@
 
 <script setup>
 
-import { defineEmits, defineProps, toRefs} from 'vue'
+import { defineEmits, defineProps, toRefs, ref} from 'vue'
+import axios from '@/axios-common'
+import { useAuthStore } from "@/stores/authStore";
 // import axios from '@/axios-common'
 
 // let products = []
-const emit = defineEmits(['openModal', 'addProductOrder', 'deleteOrder', 'deleteProductOrder', 'updateStatus'])
+const emit = defineEmits(['openModal', 'addProductOrder', 'deleteOrder', 'deleteProductOrder', 'updateStatus', 'sendChangelog'])
 const props = defineProps ({
     allOrders: Array,
     allProducts: Array,
 })
 const { allOrders } = toRefs(props)
-// let input = ref('');
+const authStore = useAuthStore()
+let input = ref('');
 const { allProducts } = toRefs(props)
+
+let productSelected = ref('')
+// let productSelectedObject = ref([]);
+let getProductSelectedObject = ref([])
+
 
 // Hiermee geef ik een signaal aan de template om het modal te openen doormiddel van de functie openAddCustomers
 function open() {
@@ -135,13 +172,14 @@ function convertDate(date) {
     }
 }
 
-// function searchFilterInput() {
-//     if (this.input !== null ) {
-//         return allOrders.value.filter(order => {
-//         return order.company.name.toLowerCase().includes(this.input.toLowerCase())
-//         })
-//     }
-// }
+function searchFilterInput() {
+    // filter allorders by this.input with order name
+    if (this.input !== null ) {
+        return allOrders.value.filter(order => {
+        return order.name.toLowerCase().includes(this.input.toLowerCase())
+        })
+    }
+}
 
 function filterAllProducts() {
     // if stock is 0 product is not available remove from select
@@ -149,6 +187,16 @@ function filterAllProducts() {
         return product.stock > 0
     })
 
+}
+
+function convertStringToDate(date) {
+    // give a string date and convert it to a date object
+    if (date === null) {
+        return null
+    } else {
+        let newDate = new Date(date)
+        return newDate
+    }
 }
 
 function sortStatus (boolean) {
@@ -214,6 +262,20 @@ function sortName (boolean) {
         })
     }
 }
+
+function getProduct(product) {
+    productSelected.value = (product);
+    axios.get('/product/stock/' + productSelected.value , {
+        headers: {
+            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+        }
+    })
+    .then(response => (
+        getProductSelectedObject.value = response.data,
+        console.log(getProductSelectedObject.value)
+    ))
+    .catch((error) => console.log(error.response.data))
+}
 </script>
 
 <script>
@@ -222,11 +284,19 @@ export default {
     data() {
         return {
             hide: false,
+            change: false,
             show: true,
+            disable: false,
             search: '',
+            input: '',
             data: {
                 product: '',
                 order: '',
+                stock: '',
+                number: '',
+                message: '',
+                orderid: '',
+                userid: this.authStore.id,
             },
             deleteProduct: {
                 product: '',
@@ -236,22 +306,37 @@ export default {
     },
     methods: {
         addProductToOrder(name) {
-            
-            this.data.order = name
-            this.$emit('addProductOrder', this.data)
-            this.filterAllProducts()
-            this.order.hide = true
+                this.data.order = name
+                this.disable = true;
+                this.$emit('addProductOrder', this.data)
+                this.filterAllProducts()
+                setTimeout(() => this.getProduct(this.data.product), 400)
+                this.disable = false;
         },
         deleteAnOrder(name) {
             if(confirm('Are you sure you want to delete this order?')) {
                 this.$emit('deleteOrder', name)
             }
         },
+        sendChangelog(idorder) {
+            console.log(idorder)
+            this.data.orderid = idorder;
+            this.$emit('sendChangelog', this.data)
+            this.data.message = ''
+        },
         deleteProductToOrder(product, order) {
             this.deleteProduct.product = product
             this.deleteProduct.order = order
             this.$emit('deleteProductOrder', this.deleteProduct)
-        }
+            setTimeout(() => this.getProduct(this.data.product), 400)
+        },
+        returnStock(productname) {
+            let product = this.allProducts.value.find(product => {
+                return product.name === productname
+            })
+            return product.stock
+        },
+
 
     },
     mounted() {
@@ -326,6 +411,9 @@ button {
     padding: 48px;
 }
 
+.toolate {
+    color: red;
+}
 select{
     display: flex;
     width: 100%;
@@ -436,13 +524,17 @@ p {
     background: rgba(255, 166, 0, 0.075);
 }
 
+.orderHeaderToLate {
+    background: rgba(255, 0, 0, 0.096);
+}
+
 .orderHeaderDone {
     background: rgba(0, 255, 34, 0.075);
 }
 
-.order:hover .orderHeader {
+/* .order:hover .orderHeader {
     background: #dddff55e;
-}
+} */
 
 .rightFooter, .leftfooter {
     display: flex;
@@ -517,6 +609,11 @@ p {
     border:1px solid #c5c5c541;
     color: rgb(0, 0, 0);
     font-weight: 400;
+}
+
+.closeButton:disabled {
+    color: rgba(255, 0, 0, 0.856);
+    background: rgba(255, 0, 0, 0.301);
 }
 
 .orderContentRight .deleteButton {
@@ -636,5 +733,91 @@ p {
 .statuscircle_done {
     background: rgb(0, 207, 0);
     border-radius: 16px;
+}
+
+.statuscircle_late {
+    background: rgb(207, 0, 0);
+    border-radius: 16px;
+}
+
+.selection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+}
+
+.numberstock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #F0F0F0;
+    height: 40px;
+    width: 40px;
+}
+
+.inputmany {
+    width: 80px;
+}
+.changelogb {
+    display: flex;
+    flex-direction: column;
+    background-color: #dddff55e;
+    padding: 6px;
+    border: 1px solid #EBEBEB;
+    gap: 6px;
+}
+.send {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.send input {
+    border: 1px solid #e7e7e7;
+}
+.send button { 
+    font-size: 14px;
+    border: 1px solid #e7e7e7;
+    font-weight: 400;
+    padding: 12px;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.send input {
+    margin: 0px;
+}
+.changelogitems {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100px;
+    overflow-y: scroll;
+    border: 1px solid #EBEBEB;
+    background: white;
+    padding: 3px;
+}
+
+.changelogitems h3 {
+    background: rgb(255, 255, 255);
+    padding: 4px;
+    color: black;
+}
+
+
+.changelogitems p {
+    display: flex;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+hr {
+    height: 1px;
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: rgba(211, 211, 211, 0.822);
 }
 </style>

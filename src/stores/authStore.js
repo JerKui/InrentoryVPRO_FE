@@ -29,6 +29,7 @@ export const useAuthStore = defineStore({
       }
     },
     getters: {
-      firstName: (state) => state.user.data.firstName
+      firstName: (state) => state.user.data.firstName,
+      id: (state) => state.user.data.id,
     }
   })

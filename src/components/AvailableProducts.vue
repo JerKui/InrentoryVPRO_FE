@@ -3,7 +3,7 @@
 <div class="flex--1">
     <div class="productsHeader">
         <h1>Inventory</h1>
-        <input type="text" v-model="input" placeholder="Search">
+        <input type="text" v-model="input" placeholder="Search here for a product">
         <button @click="open">+ Add product</button>
     </div>
         <div class="filter" v-if="true">
