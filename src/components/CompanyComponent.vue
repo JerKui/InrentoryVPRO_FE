@@ -33,7 +33,7 @@
                              <p>+ {{ company.phone }}</p>  
                         </div>
                     </div>
-                    <button @click="openedit(company.id)">+ Edit company</button>  
+                    <button class="button" @click="openedit(company.id)">+ Edit company</button>  
                 </div>
             </div>
         </div>
@@ -66,15 +66,28 @@ button {
     justify-content: center;
     align-items: center;
     background: white;
-    border: 2px solid #F0F0F0;
+    border: 1px solid #F0F0F0;
     padding: 28px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     color: black;
     border-radius: 0px;
     cursor: pointer;
+    
 }
 
+.button { 
+        font-size: 14px;
+    font-weight: 300;
+    color: white;
+    border-radius: 0px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.089);
+    border:1px solid #c5c5c541;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+
+}
 select{
     display: flex;
     justify-content: center;
@@ -97,8 +110,12 @@ h1 {
 
 }
 
+hr {
+    height: 1px;
+}
+
 h3 {
-    font-weight: 300;
+    font-weight: 200;
     color: #A5A8AB;
 }
 
@@ -109,7 +126,7 @@ p {
 }
 h2 {
     color: black;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .flex--1 {
@@ -136,10 +153,10 @@ h2 {
 
 .companypopup {
     background-color: #FAFAFA;
-    border-bottom: 2px solid #F3F3F4;
+    border: 1px solid #F3F3F4;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
     padding: 24px;
     width: 20.55%;
     min-height: 42%;
@@ -154,8 +171,10 @@ h2 {
 .companyinformation {
     display: flex;
     flex-direction: column;
-    width: 100%;
     gap: 6px;
+    padding: 24px;
+    border: 1px solid #F3F3F4;
+    background: white;
 }
 
 .companyinfo {

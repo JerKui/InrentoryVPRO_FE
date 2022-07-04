@@ -46,6 +46,7 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  font-weight: 400;
 }
 /* DO NOT TOUCH! */
 .container {

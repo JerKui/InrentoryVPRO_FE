@@ -165,14 +165,13 @@ function sortStatus (boolean) {
 }
 
 function sortDate (boolean) {
-    // sort returndate with boolean
     if (boolean) {
         allOrders.value.sort((a, b) => {
-            return a.returnDate - b.returnDate
+            return new Date(a.orderDate) - new Date(b.orderDate)
         })
     } else {
         allOrders.value.sort((a, b) => {
-            return b.returnDate - a.returnDate
+            return new Date(b.orderDate) - new Date(a.orderDate)
         })
     }
 }

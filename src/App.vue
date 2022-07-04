@@ -52,7 +52,7 @@ hr {
 h2 {
   font-family: 'Poppins';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: -0.3px;
@@ -89,7 +89,7 @@ label {
   color: black;
   font-family: 'Poppins';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 15px;
   line-height: 22px;
   letter-spacing: -0.px;
@@ -106,6 +106,10 @@ input, select {
   background-color: white;
   border-bottom: 1px solid #a5a8ab5e;
   color: black;
+}
+
+input {
+  font-weight: 400;
 }
 
 
