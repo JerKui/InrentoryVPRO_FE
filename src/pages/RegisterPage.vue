@@ -4,7 +4,7 @@
         <form v-on:submit.prevent="submitForm">
             <div class="formContent">
                 <h2>Register here</h2>
-                <label> {{ this.message }}</label>
+                <label class="errormessage"> {{ this.message }}</label>
                 <div class="name">
                     <div class="firstName">
                         <label>First Name
@@ -106,6 +106,10 @@
 
 .firstName, .lastName {
     width: 50%;
+}
+
+.errormessage{
+    color: red;
 }
 </style>
 

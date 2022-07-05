@@ -4,7 +4,7 @@
         <form v-on:submit.prevent="submitForm">
             <div class="formContent">
                 <h2>Login here</h2>
-                <label> {{ this.message }}</label>
+                <label class="errormessage"> {{ this.message }}</label>
                 <div class="email">
                     <label>Email
                     <input v-model="form.email" placeholder="Enter your email" type="email" required/></label>   
@@ -97,6 +97,10 @@
 
 .firstName, .lastName {
     width: 50%;
+}
+
+.errormessage {
+    color: red;
 }
 </style>
 
