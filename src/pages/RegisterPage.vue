@@ -129,10 +129,12 @@ export default {
         submitForm() {
             axios.post('/registration', this.form)
             .then((res) => {
+                
                 console.log(res)
             })
             .catch((error) => {
                 console.log(error)
+                error(error.response.data)
             })
         }
     }
