@@ -32,7 +32,7 @@
                             </label>
                         </div>
                     </div>
-                    <button>Update company</button>        
+                    <button>Add order</button>        
                 </div>
                 </form>
             </div>

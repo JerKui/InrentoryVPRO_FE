@@ -93,7 +93,7 @@
                     <div class="changelog outer" v-show="!order.change">
                         <div class="changelogb inner">
                             <div class="changelogitems">
-                                <div v-for="changelog in order.changelogs" :key="changelog.id">
+                                <div v-for="changelog in order.changelogs.slice().reverse()" :key="changelog.id">
                                     <h3> {{changelog.user.firstName}}:  {{ changelog.message }}</h3>
                                     <hr>
                                 </div>
@@ -806,6 +806,7 @@ p {
     border: 1px solid #EBEBEB;
     background: white;
     padding: 3px;
+    flex-direction: column-reverse;
 }
 
 .changelogitems h3 {

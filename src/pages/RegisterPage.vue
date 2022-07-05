@@ -4,6 +4,7 @@
         <form v-on:submit.prevent="submitForm">
             <div class="formContent">
                 <h2>Register here</h2>
+                <label> {{ this.message }}</label>
                 <div class="name">
                     <div class="firstName">
                         <label>First Name
@@ -116,6 +117,7 @@ export default {
     name : 'RegisterPage',
     data() {
         return {
+            message: '',
             form: {
                 firstName: '',
                 lastName: '',
@@ -131,9 +133,12 @@ export default {
             .then((res) => {
                 
                 console.log(res)
+                confirm("Registration successful, confirm your email now!")
+                this.$router.push('login')
             })
             .catch((error) => {
                 console.log(error)
+                this.message = error.response.data
             })
         }
     }
