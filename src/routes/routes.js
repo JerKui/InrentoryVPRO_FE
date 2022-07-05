@@ -4,6 +4,7 @@ import DashboardPage from '@/pages/DashboardPage';
 import CustomerPage from '@/pages/CustomerPage';
 import ProductPage from '@/pages/ProductPage';
 import CompanyPage from '@/pages/CompanyPage';
+import EmailConfirmed from '@/pages/EmailConfirmed';
 import { useAuthStore } from '@/stores/authStore'
 import { createWebHistory, createRouter } from 'vue-router';
 
@@ -37,6 +38,11 @@ const routes = [
       path: '/inventory',
       name: 'ProductPage',
       component: ProductPage
+    },
+    {
+      path: '/confirm',
+      name: 'EmailConfirmed',
+      component: EmailConfirmed
     }
 ];
 
