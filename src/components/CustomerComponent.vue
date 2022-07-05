@@ -14,7 +14,7 @@
             <button @click="sortID(value = !value)">ID</button>  
         </div>
         </Transition>
-        <div class="order" v-for="(order) in allOrders" :key="order">
+        <div class="order" v-for="(order) in searchFilterInput()" :key="order">
             <div class="orderHeader" @click="order.hide = !order.hide" :class="
                         [order.status === 0 ? 'orderHeaderNeutral' : 'orderHeaderDone',
                         convertStringToDate(order.returnDate) <= new Date() && order.status === 0 ? 'orderHeaderToLate' : '']">
@@ -51,7 +51,7 @@
             <Transition name="nested" :duration="{ enter: 800, leave: 300 }">
             <div class="orderContent outer" v-show="!order.hide">
                 <div class="orderContentLeft inner">
-                    <div class="orderContentLeft_items" v-for="(product) in order.products" :key="product">
+                    <div class="orderContentLeft_items" v-for="(product) in allProducts" :key="product">
                         <div class="orderContentLeft_item">
                             <div class="itemcontent">
                                 <div class="categorypiece" :disabled="authStore.id">
@@ -172,14 +172,21 @@ function convertDate(date) {
     }
 }
 
-// function searchFilterInput() {
-//     // filter allorders by this.input with order name
-//     if (this.input !== null ) {
-//         return allOrders.value.filter(order => {
-//         return order.name.toLowerCase().includes(this.input.toLowerCase())
-//         })
-//     }
-// }
+function searchFilterInput() {
+    // if (input.value === '') {
+    //     return allOrders.value
+    // } else {
+    //     return allOrders.value.filter(order => {
+    //         return order.name.toLowerCase().includes(input.value.toLowerCase())
+    //     })
+    // }
+
+    if (this.input !== null ) {
+        return allOrders.value.filter(order => {
+        return order.name.toLowerCase().includes(this.input.toLowerCase())
+        })
+    }
+}
 
 function filterAllProducts() {
     // if stock is 0 product is not available remove from select
