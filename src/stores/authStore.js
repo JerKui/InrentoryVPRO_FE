@@ -20,7 +20,7 @@ export const useAuthStore = defineStore({
   
         localStorage.setItem('user', JSON.stringify(user));
   
-        router.push('/');
+        router.push('/orders');
       },
       logout() {
         this.user = null;

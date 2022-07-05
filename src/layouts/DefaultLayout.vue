@@ -6,10 +6,10 @@
       <div></div>
       <div></div>
       <div></div>
-      <router-link class="router" to="'/" >
+      <!-- <router-link class="router" to="'/" >
         <font-awesome-icon icon="fa-regular fa-map" />
         Dashboard
-      </router-link>
+      </router-link> -->
       
       <router-link class="router" to="'/orders" >
         <font-awesome-icon icon="fa-regular fa-envelope" />

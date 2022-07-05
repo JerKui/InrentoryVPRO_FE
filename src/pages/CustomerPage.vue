@@ -28,6 +28,8 @@ import { ref, onMounted } from 'vue'
 
 let allOrders = ref([])
 let allProducts = ref([])
+// let allLoanedProducts = ref([])
+// let allSpecificProducts = ref([])
 // Reference Boolean om het modal 'AddCustomer' te openen of te sluiten
 let status = ref(false)
 
@@ -159,6 +161,32 @@ function updateStatusOrder(options) {
     })
     .catch((error) => console.log(error.response.data), console.log(this.deletedProduct.id))
 }
+
+// function getAllLoanedProducts() {
+//     axios.get('/orders/missing', {
+//         headers: {
+//             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+//         }
+//     })
+//     .then(response => (
+//         allLoanedProducts.value = response.data,
+//         console.log(allLoanedProducts.value)
+//     ))
+//     .catch((error) => console.log(error.response.data))
+// }
+
+// function getAllProductSpecific() {
+//     axios.get('/orders/missing/' + 3, {
+//         headers: {
+//             Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).headers.authorization
+//         }
+//     })
+//     .then(response => (
+//         allSpecificProducts.value = response.data,
+//         console.log(allSpecificProducts.value)
+//     ))
+//     .catch((error) => console.log(error.response.data))
+// }
 
 </script>
 
