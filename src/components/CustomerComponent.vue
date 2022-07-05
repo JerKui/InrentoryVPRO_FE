@@ -130,7 +130,6 @@
 
 import { defineEmits, defineProps, toRefs, ref} from 'vue'
 import axios from '@/axios-common'
-import { useAuthStore } from "@/stores/authStore";
 // import axios from '@/axios-common'
 
 // let products = []
@@ -140,7 +139,6 @@ const props = defineProps ({
     allProducts: Array,
 })
 const { allOrders } = toRefs(props)
-const authStore = useAuthStore()
 let input = ref('');
 const { allProducts } = toRefs(props)
 
@@ -279,6 +277,8 @@ function getProduct(product) {
 </script>
 
 <script>
+import { useAuthStore } from "@/stores/authStore";
+const authStore = useAuthStore()
 export default {
 
     data() {
@@ -296,7 +296,7 @@ export default {
                 number: '',
                 message: '',
                 orderid: '',
-                userid: this.authStore.id,
+                userid: '',
             },
             deleteProduct: {
                 product: '',
@@ -319,6 +319,7 @@ export default {
             }
         },
         sendChangelog(idorder) {
+            this.userid = authStore.user.id
             console.log(idorder)
             this.data.orderid = idorder;
             this.$emit('sendChangelog', this.data)
