@@ -81,6 +81,10 @@ export default {
                 this.$emit('createOrder', this.formOrder)
                 this.$refs.addorder.reset();
                 this.close();
+                this.formOrder.comments = '';
+                this.formOrder.name = '';
+                this.formOrder.returnDate = '';
+                this.formOrder.company = '';
             }
         },
         getCompanies() {

@@ -51,7 +51,7 @@
             <Transition name="nested" :duration="{ enter: 800, leave: 300 }">
             <div class="orderContent outer" v-show="!order.hide">
                 <div class="orderContentLeft inner">
-                    <div class="orderContentLeft_items" v-for="(product) in allProducts" :key="product">
+                    <div class="orderContentLeft_items" v-for="(product) in order.products" :key="product">
                         <div class="orderContentLeft_item">
                             <div class="itemcontent">
                                 <div class="categorypiece" :disabled="authStore.id">
