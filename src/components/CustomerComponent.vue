@@ -14,7 +14,7 @@
             <button @click="sortID(value = !value)">ID</button>  
         </div>
         </Transition>
-        <div class="order" v-for="(order) in searchFilterInput(allOrders)" :key="order">
+        <div class="order" v-for="(order) in allOrders" :key="order">
             <div class="orderHeader" @click="order.hide = !order.hide" :class="
                         [order.status === 0 ? 'orderHeaderNeutral' : 'orderHeaderDone',
                         convertStringToDate(order.returnDate) <= new Date() && order.status === 0 ? 'orderHeaderToLate' : '']">
@@ -172,14 +172,14 @@ function convertDate(date) {
     }
 }
 
-function searchFilterInput() {
-    // filter allorders by this.input with order name
-    if (this.input !== null ) {
-        return allOrders.value.filter(order => {
-        return order.name.toLowerCase().includes(this.input.toLowerCase())
-        })
-    }
-}
+// function searchFilterInput() {
+//     // filter allorders by this.input with order name
+//     if (this.input !== null ) {
+//         return allOrders.value.filter(order => {
+//         return order.name.toLowerCase().includes(this.input.toLowerCase())
+//         })
+//     }
+// }
 
 function filterAllProducts() {
     // if stock is 0 product is not available remove from select
