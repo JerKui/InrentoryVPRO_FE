@@ -134,7 +134,6 @@ export default {
             })
             .catch((error) => {
                 console.log(error)
-                error(error.response.data)
             })
         }
     }
