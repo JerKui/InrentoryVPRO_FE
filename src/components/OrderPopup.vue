@@ -21,7 +21,7 @@
                     </div>
                     <div class="name">
                         <div class="firstName">
-                            <label>Date
+                            <label>Return date
                             <input v-model="formOrder.returnDate" type="date" required/></label>
                         </div>
                         <div class="lastName">
